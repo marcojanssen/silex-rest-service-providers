@@ -39,7 +39,7 @@ class RequestValidatorService
         );
 
         if($this->validator->hasErrors()) {
-            return new JsonResponse(array('errors' => $this->validator->getErrorResponse()));
+            return array('errors' => $this->validator->getErrorResponse());
         }
 
         return null;

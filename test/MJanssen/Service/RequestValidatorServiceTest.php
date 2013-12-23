@@ -40,10 +40,17 @@ class RequestValidatorServiceTest extends \PHPUnit_Framework_TestCase
         $request->attributes->set('validator', 'MJanssen\Fixtures\Validator\TestValidator');
 
         $requestValidator = new RequestValidatorService($app['service.validator'], $request);
+        $response = $requestValidator->validateRequest();
 
         $this->assertSame(
-            '{"errors":["[id] This value should be of type numeric.\n","[name] This value is too short. It should have 5 characters or more.\n","[baz] This field was not expected.\n"]}',
-            $requestValidator->validateRequest()->getContent()
+            array(
+                'errors' => array(
+                    '[id] This value should be of type numeric.'.PHP_EOL,
+                    '[name] This value is too short. It should have 5 characters or more.'.PHP_EOL,
+                    '[baz] This field was not expected.'.PHP_EOL
+                )
+            ),
+            $response
         );
     }
 
