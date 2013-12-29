@@ -48,9 +48,8 @@ abstract class RestController
      */
     public function deleteAction(Request $request, Application $app, $id)
     {
-        return new JsonResponse(
-            $app['service.rest.entity']->deleteAction($id)
-        );
+        $app['service.rest.entity']->deleteAction($id);
+        return new Response('', 204);
 
     }
 

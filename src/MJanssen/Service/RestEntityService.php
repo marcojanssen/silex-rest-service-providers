@@ -26,7 +26,7 @@ class RestEntityService
 
     /**
      * @param $identifier
-     * @return JsonResponse
+     * @return mixed
      */
     public function getAction($identifier)
     {
@@ -40,10 +40,7 @@ class RestEntityService
     }
 
     /**
-     * @param Request $request
-     * @param Application $app
-     * @param null $id
-     * @return JsonResponse
+     * @return array
      */
     public function getCollectionAction()
     {
@@ -62,7 +59,7 @@ class RestEntityService
 
     /**
      * @param $identifier
-     * @return JsonResponse
+     * @return array
      */
     public function deleteAction($identifier)
     {
@@ -72,11 +69,11 @@ class RestEntityService
         $this->app['orm.em']->remove($entity);
         $this->app['orm.em']->flush();
 
-        return array('item removed');
+        return true;
     }
 
     /**
-     * @return JsonResponse
+     * @return array
      */
     public function postAction()
     {
@@ -85,15 +82,18 @@ class RestEntityService
             return $response;
         }
 
-        $item = $this->app['doctrine.hydrator']->hydrateEntity(
+        $entity = $this->app['doctrine.hydrator']->hydrateEntity(
             $this->request->getContent(),
             $this->getEntityName()
         );
 
-        $this->app['orm.em']->persist($item);
+        $this->app['orm.em']->persist($entity);
         $this->app['orm.em']->flush();
 
-        return array('item posted');
+        return $this->app['doctrine.extractor']->extractEntity(
+            $entity,
+            'detail'
+        );
     }
 
     /**
@@ -110,15 +110,18 @@ class RestEntityService
         $entity = $this->getEntityFromRepository($identifier);
         $this->isValidEntity($entity, $identifier);
 
-        $item = $this->app['doctrine.hydrator']->hydrateEntity(
+        $updatedEntity = $this->app['doctrine.hydrator']->hydrateEntity(
             $this->request->getContent(),
             $this->getEntityName()
         );
 
-        $this->app['orm.em']->merge($item);
+        $this->app['orm.em']->merge($updatedEntity);
         $this->app['orm.em']->flush();
 
-        return array('item updated');
+        return $this->app['doctrine.extractor']->extractEntity(
+            $updatedEntity,
+            'detail'
+        );
     }
 
 
