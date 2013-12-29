@@ -47,7 +47,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             1
         );
 
-        $this->assertEquals($response->getContent(), json_encode(array('deleteAction')));
+        $this->assertEquals($response->getContent(), '');
     }
 
     /**
@@ -94,7 +94,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->executeResolveActionController('GET'), json_encode(array('getCollectionAction')));
         $this->assertEquals($this->executeResolveActionController('GET', 1), json_encode(array('getAction')));
         $this->assertEquals($this->executeResolveActionController('POST'), json_encode(array('postAction')));
-        $this->assertEquals($this->executeResolveActionController('DELETE', 1), json_encode(array('deleteAction')));
+        $this->assertEquals($this->executeResolveActionController('DELETE', 1), '');
         $this->assertEquals($this->executeResolveActionController('PUT', 1), json_encode(array('putAction')));
     }
 

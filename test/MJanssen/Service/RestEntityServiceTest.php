@@ -46,7 +46,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $response,
-            array('item removed')
+            true
         );
     }
 
@@ -60,7 +60,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $response,
-            array('item posted')
+            $this->getOutput
         );
     }
 
@@ -74,7 +74,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $response,
-            array('item updated')
+            $this->getOutput
         );
     }
 
