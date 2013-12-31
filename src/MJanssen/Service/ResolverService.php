@@ -1,7 +1,7 @@
 <?php
 namespace MJanssen\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Exception;
 use UnexpectedValueException;
 use Symfony\Component\PropertyAccess\StringUtil;
@@ -14,7 +14,7 @@ class ResolverService
      */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
