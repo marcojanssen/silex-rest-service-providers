@@ -16,27 +16,22 @@ abstract class RestController
     /**
      * @param Request $request
      * @param Application $app
-     * @param null $id
-     * @return JsonResponse
+     * @param $id
+     * @return mixed
      */
-    public function getAction(Request $request, Application $app, $id)
+    protected function get(Request $request, Application $app, $id)
     {
-        return new JsonResponse(
-            $app['service.rest.entity']->getAction($id)
-        );
+        return $app['service.rest.entity']->getAction($id);
     }
 
     /**
      * @param Request $request
      * @param Application $app
-     * @param null $id
-     * @return JsonResponse
+     * @return mixed
      */
-    public function getCollectionAction(Request $request, Application $app)
+    protected function getCollection(Request $request, Application $app)
     {
-        return new JsonResponse(
-            $app['service.rest.entity']->getCollectionAction()
-        );
+        return $app['service.rest.entity']->getCollectionAction();
     }
 
 
@@ -44,26 +39,23 @@ abstract class RestController
      * @param Request $request
      * @param Application $app
      * @param $id
-     * @return JsonResponse
+     * @return bool
      */
-    public function deleteAction(Request $request, Application $app, $id)
+    protected function delete(Request $request, Application $app, $id)
     {
         $app['service.rest.entity']->deleteAction($id);
-        return new Response('', 204);
+        return true;
 
     }
 
     /**
      * @param Request $request
      * @param Application $app
-     * @internal param $id
-     * @return JsonResponse
+     * @return mixed
      */
-    public function postAction(Request $request, Application $app)
+    protected function post(Request $request, Application $app)
     {
-        return new JsonResponse(
-            $app['service.rest.entity']->postAction()
-        );
+        return $app['service.rest.entity']->postAction();
 
     }
 
@@ -71,20 +63,19 @@ abstract class RestController
      * @param Request $request
      * @param Application $app
      * @param $id
-     * @return JsonResponse
+     * @return mixed
      */
-    public function putAction(Request $request, Application $app, $id)
+    protected function put(Request $request, Application $app, $id)
     {
-        return new JsonResponse(
-            $app['service.rest.entity']->putAction($id)
-        );
+        return $app['service.rest.entity']->putAction($id);
     }
 
     /**
      * @param Request $request
      * @param Application $app
-     * @internal param $id
-     * @return JsonResponse
+     * @param null $id
+     * @return bool|mixed
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function resolveAction(Request $request, Application $app, $id = null)
     {
