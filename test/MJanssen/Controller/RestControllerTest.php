@@ -19,7 +19,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             1
         );
 
-        $this->assertEquals($response->getContent(), json_encode(array('getAction')));
+        $this->assertEquals($response, array('getAction'));
 
     }
 
@@ -33,7 +33,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             $this->getMockApplication()
         );
 
-        $this->assertEquals($response->getContent(), json_encode(array('getCollectionAction')));
+        $this->assertEquals($response, array('getCollectionAction'));
     }
 
     /**
@@ -47,7 +47,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             1
         );
 
-        $this->assertEquals($response->getContent(), '');
+        $this->assertEquals($response, true);
     }
 
     /**
@@ -61,7 +61,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             1
         );
 
-        $this->assertEquals($response->getContent(), json_encode(array('putAction')));
+        $this->assertEquals($response, array('putAction'));
     }
 
     /**
@@ -74,7 +74,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             $this->getMockApplication()
         );
 
-        $this->assertEquals($response->getContent(), json_encode(array('postAction')));
+        $this->assertEquals($response, array('postAction'));
     }
 
     /**
@@ -91,11 +91,11 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidResolveAction()
     {
-        $this->assertEquals($this->executeResolveActionController('GET'), json_encode(array('getCollectionAction')));
-        $this->assertEquals($this->executeResolveActionController('GET', 1), json_encode(array('getAction')));
-        $this->assertEquals($this->executeResolveActionController('POST'), json_encode(array('postAction')));
-        $this->assertEquals($this->executeResolveActionController('DELETE', 1), '');
-        $this->assertEquals($this->executeResolveActionController('PUT', 1), json_encode(array('putAction')));
+        $this->assertEquals($this->executeResolveActionController('GET'), array('getCollectionAction'));
+        $this->assertEquals($this->executeResolveActionController('GET', 1), array('getAction'));
+        $this->assertEquals($this->executeResolveActionController('POST'), array('postAction'));
+        $this->assertEquals($this->executeResolveActionController('DELETE', 1), true);
+        $this->assertEquals($this->executeResolveActionController('PUT', 1), array('putAction'));
     }
 
     protected function executeResolveActionController($method, $identifier = null)
@@ -104,7 +104,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
             $this->getMockRequest($method),
             $this->getMockApplication(),
             $identifier
-        )->getContent();
+        );
     }
 
     /**

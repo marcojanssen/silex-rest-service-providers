@@ -19,7 +19,60 @@ abstract class RestController
      * @param $id
      * @return mixed
      */
-    protected function get(Request $request, Application $app, $id)
+    public function getAction(Request $request, Application $app, $id)
+    {
+        return $this->get($app, $id);
+    }
+
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function getCollectionAction(Request $request, Application $app)
+    {
+        return $this->getCollection($app);
+    }
+
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function postAction(Request $request, Application $app)
+    {
+        return $this->post($app);
+    }
+
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return bool
+     */
+    public function deleteAction(Request $request, Application $app, $id)
+    {
+        return $this->delete($app, $id);
+    }
+
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    public function putAction(Request $request, Application $app, $id)
+    {
+        return $this->put($app, $id);
+    }
+
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @param $id
+     * @return mixed
+     */
+    protected function get(Application $app, $id)
     {
         return $app['service.rest.entity']->getAction($id);
     }
@@ -29,7 +82,7 @@ abstract class RestController
      * @param Application $app
      * @return mixed
      */
-    protected function getCollection(Request $request, Application $app)
+    protected function getCollection(Application $app)
     {
         return $app['service.rest.entity']->getCollectionAction();
     }
@@ -41,7 +94,7 @@ abstract class RestController
      * @param $id
      * @return bool
      */
-    protected function delete(Request $request, Application $app, $id)
+    protected function delete(Application $app, $id)
     {
         $app['service.rest.entity']->deleteAction($id);
         return true;
@@ -53,7 +106,7 @@ abstract class RestController
      * @param Application $app
      * @return mixed
      */
-    protected function post(Request $request, Application $app)
+    protected function post(Application $app)
     {
         return $app['service.rest.entity']->postAction();
 
@@ -65,7 +118,7 @@ abstract class RestController
      * @param $id
      * @return mixed
      */
-    protected function put(Request $request, Application $app, $id)
+    protected function put(Application $app, $id)
     {
         return $app['service.rest.entity']->putAction($id);
     }
