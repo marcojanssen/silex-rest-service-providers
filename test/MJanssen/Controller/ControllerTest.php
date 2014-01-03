@@ -1,25 +1,16 @@
 <?php
 namespace MJanssen\Controller;
 
-use MJanssen\Fixtures\Controller\TestDefaultController;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
-class ControllerTest extends \PHPUnit_Framework_TestCase
+class ControllerTest extends AbstractControllerTest
 {
     /**
      * Test if the get action works
      */
     public function testGetAction()
     {
-        $response = $this->getTestController()->getAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
-
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doGetAction());
     }
 
     /**
@@ -27,12 +18,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCollectionAction()
     {
-        $response = $this->getTestController()->getCollectionAction(
-            $this->getMockRequest(),
-            $this->getMockApplication()
-        );
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doGetCollectionAction());
     }
 
     /**
@@ -40,13 +26,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAction()
     {
-        $response = $this->getTestController()->deleteAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doDeleteAction());
     }
 
     /**
@@ -54,13 +34,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPutAction()
     {
-        $response = $this->getTestController()->putAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doPutAction());
     }
 
     /**
@@ -68,12 +42,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPostAction()
     {
-        $response = $this->getTestController()->postAction(
-            $this->getMockRequest(),
-            $this->getMockApplication()
-        );
-
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doPostAction());
     }
 
     /**
@@ -81,100 +50,10 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveAction()
     {
-        $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\Response',
-            $this->executeResolveActionController('GET')
-        );
-
-        $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\Response',
-            $this->executeResolveActionController('GET', 1)
-        );
-
-        $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\Response',
-            $this->executeResolveActionController('POST')
-        );
-
-        $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\Response',
-            $this->executeResolveActionController('DELETE')
-        );
-
-        $this->assertInstanceOf(
-            'Symfony\Component\HttpFoundation\Response',
-            $this->executeResolveActionController('PUT')
-        );
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doResolveAction('GET'));
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doResolveAction('GET', 1));
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doResolveAction('POST'));
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doResolveAction('PUT'));
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $this->doResolveAction('DELETE'));
     }
-
-    /**
-     * @param $method
-     * @param null $identifier
-     * @return mixed
-     */
-    protected function executeResolveActionController($method, $identifier = null)
-    {
-        return $this->getTestController()->resolveAction(
-            $this->getMockRequest($method),
-            $this->getMockApplication(),
-            $identifier
-        );
-    }
-
-    /**
-     * @return TestController
-     */
-    protected function getTestController()
-    {
-        return new TestDefaultController();
-    }
-
-    /**
-     * @return Request
-     */
-    protected function getMockRequest($method = '')
-    {
-        $request = new Request;
-
-        if(!empty($method)) {
-            $request->setMethod($method);
-        }
-
-        return $request;
-    }
-
-    /**
-     * @return Application
-     */
-    protected function getMockApplication()
-    {
-        $app = new Application();
-
-        $serviceRestEntity = $this->getMock('MJanssen\Service\RestEntityService', array(), array($this->getMockRequest(), $app));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('get')
-                          ->will($this->returnValue(array('getAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('getCollection')
-                          ->will($this->returnValue(array('getCollectionAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('delete')
-                          ->will($this->returnValue(array('deleteAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('put')
-                          ->will($this->returnValue(array('putAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('post')
-                          ->will($this->returnValue(array('postAction')));
-
-        $app['service.rest.entity'] = $serviceRestEntity;
-
-        return $app;
-    }
-
 }

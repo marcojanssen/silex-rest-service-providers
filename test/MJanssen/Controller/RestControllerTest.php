@@ -3,13 +3,12 @@ namespace MJanssen\Controller;
 
 use MJanssen\Fixtures\Controller\TestRestController;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Test case for a default controller setup without any implementation for each available method
  * @package MJanssen\Controller
  */
-class RestControllerTest extends \PHPUnit_Framework_TestCase
+class RestControllerTest extends AbstractControllerTest
 {
     /**
      * Test if the get action works
@@ -17,11 +16,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAction()
     {
-        $this->getTestController()->getAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
+        $this->doGetAction();
     }
 
     /**
@@ -30,10 +25,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCollectionAction()
     {
-        $this->getTestController()->getCollectionAction(
-            $this->getMockRequest(),
-            $this->getMockApplication()
-        );
+        $this->doGetCollectionAction();
     }
 
     /**
@@ -42,11 +34,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAction()
     {
-        $this->getTestController()->deleteAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
+        $this->doDeleteAction();
     }
 
     /**
@@ -55,11 +43,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPutAction()
     {
-        $this->getTestController()->putAction(
-            $this->getMockRequest(),
-            $this->getMockApplication(),
-            1
-        );
+        $this->doPutAction();
     }
 
     /**
@@ -68,10 +52,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPostAction()
     {
-        $this->getTestController()->postAction(
-            $this->getMockRequest(),
-            $this->getMockApplication()
-        );
+        $this->doPostAction();
     }
 
     /**
@@ -80,11 +61,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidResolveAction()
     {
-        $this->getTestController()->resolveAction(
-            $this->getMockRequest('FOO'),
-            $this->getMockApplication(),
-            1
-        );
+        $this->doResolveAction('FOO');
     }
 
     /**
@@ -94,27 +71,4 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
     {
         return new TestRestController();
     }
-
-    /**
-     * @return Request
-     */
-    protected function getMockRequest($method = '')
-    {
-        $request = new Request;
-
-        if(!empty($method)) {
-            $request->setMethod($method);
-        }
-
-        return $request;
-    }
-
-    /**
-     * @return Application
-     */
-    protected function getMockApplication()
-    {
-        return new Application;
-    }
-
 }
