@@ -5,7 +5,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Process\Exception\RuntimeException;
+use RuntimeException;
 
 /**
  * Class RestController
@@ -21,7 +21,7 @@ abstract class RestController
      */
     public function getAction(Request $request, Application $app, $id)
     {
-        return $this->get($app, $id);
+        throw new RuntimeException('This method is not implemented');
     }
 
     /**
@@ -31,7 +31,7 @@ abstract class RestController
      */
     public function getCollectionAction(Request $request, Application $app)
     {
-        return $this->getCollection($app);
+        throw new RuntimeException('This method is not implemented');
     }
 
     /**
@@ -41,7 +41,7 @@ abstract class RestController
      */
     public function postAction(Request $request, Application $app)
     {
-        return $this->post($app);
+        throw new RuntimeException('This method is not implemented');
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class RestController
      */
     public function deleteAction(Request $request, Application $app, $id)
     {
-        return $this->delete($app, $id);
+        throw new RuntimeException('This method is not implemented');
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class RestController
      */
     public function putAction(Request $request, Application $app, $id)
     {
-        return $this->put($app, $id);
+        throw new RuntimeException('This method is not implemented');
     }
 
     /**

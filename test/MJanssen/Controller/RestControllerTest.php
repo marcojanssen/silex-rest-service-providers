@@ -1,109 +1,89 @@
 <?php
 namespace MJanssen\Controller;
 
-use MJanssen\Fixtures\Controller\TestController;
+use MJanssen\Fixtures\Controller\TestRestController;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Test case for a default controller setup without any implementation for each available method
+ * @package MJanssen\Controller
+ */
 class RestControllerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test if the get action works
+     * @expectedException RuntimeException
      */
     public function testGetAction()
     {
-        $response = $this->getTestController()->getAction(
+        $this->getTestController()->getAction(
             $this->getMockRequest(),
             $this->getMockApplication(),
             1
         );
-
-        $this->assertEquals($response, array('getAction'));
-
     }
 
     /**
      * Test if the getCollection action works
+     * @expectedException RuntimeException
      */
     public function testGetCollectionAction()
     {
-        $response = $this->getTestController()->getCollectionAction(
+        $this->getTestController()->getCollectionAction(
             $this->getMockRequest(),
             $this->getMockApplication()
         );
-
-        $this->assertEquals($response, array('getCollectionAction'));
     }
 
     /**
      * Test if the delete action works
+     * @expectedException RuntimeException
      */
     public function testDeleteAction()
     {
-        $response = $this->getTestController()->deleteAction(
+        $this->getTestController()->deleteAction(
             $this->getMockRequest(),
             $this->getMockApplication(),
             1
         );
-
-        $this->assertEquals($response, true);
     }
 
     /**
      * Test if the put action works
+     * @expectedException RuntimeException
      */
     public function testPutAction()
     {
-        $response = $this->getTestController()->putAction(
+        $this->getTestController()->putAction(
             $this->getMockRequest(),
             $this->getMockApplication(),
             1
         );
-
-        $this->assertEquals($response, array('putAction'));
     }
 
     /**
      * Test if the post action works
+     * @expectedException RuntimeException
      */
     public function testPostAction()
     {
-        $response = $this->getTestController()->postAction(
+        $this->getTestController()->postAction(
             $this->getMockRequest(),
             $this->getMockApplication()
         );
-
-        $this->assertEquals($response, array('postAction'));
-    }
-
-    /**
-     * Test if the resolve action works
-     * @expectedException RuntimeException
-     */
-    public function testResolveAction()
-    {
-        $this->assertEquals($this->executeResolveActionController('FOO'), 'fooAction');
     }
 
     /**
      * Test if a invalid method triggers an exception
+     * @expectedException RuntimeException
      */
     public function testInvalidResolveAction()
     {
-        $this->assertEquals($this->executeResolveActionController('GET'), array('getCollectionAction'));
-        $this->assertEquals($this->executeResolveActionController('GET', 1), array('getAction'));
-        $this->assertEquals($this->executeResolveActionController('POST'), array('postAction'));
-        $this->assertEquals($this->executeResolveActionController('DELETE', 1), true);
-        $this->assertEquals($this->executeResolveActionController('PUT', 1), array('putAction'));
-    }
-
-    protected function executeResolveActionController($method, $identifier = null)
-    {
-        return $this->getTestController()->resolveAction(
-            $this->getMockRequest($method),
+        $this->getTestController()->resolveAction(
+            $this->getMockRequest('FOO'),
             $this->getMockApplication(),
-            $identifier
+            1
         );
     }
 
@@ -112,7 +92,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTestController()
     {
-        return new TestController();
+        return new TestRestController();
     }
 
     /**
@@ -134,33 +114,7 @@ class RestControllerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockApplication()
     {
-        $app = new Application();
-
-        $serviceRestEntity = $this->getMock('MJanssen\Service\RestEntityService', array(), array($this->getMockRequest(), $app));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('getAction')
-                          ->will($this->returnValue(array('getAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('getCollectionAction')
-                          ->will($this->returnValue(array('getCollectionAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('deleteAction')
-                          ->will($this->returnValue(array('deleteAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('putAction')
-                          ->will($this->returnValue(array('putAction')));
-
-        $serviceRestEntity->expects($this->any())
-                          ->method('postAction')
-                          ->will($this->returnValue(array('postAction')));
-
-        $app['service.rest.entity'] = $serviceRestEntity;
-
-        return $app;
+        return new Application;
     }
 
 }
