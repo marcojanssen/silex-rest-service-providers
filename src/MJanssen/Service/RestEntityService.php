@@ -44,15 +44,10 @@ class RestEntityService
      */
     public function getCollectionAction()
     {
-        $collection = new RepositoryFilter($this->getEntityRepository());
-        $collection->filter(new Ascending('id'));
-        $this->filterRepositoryByRequest(
-            $collection,
-            $this->request
-        );
-
         return $this->app['doctrine.extractor']->extractEntities(
-            $collection,
+            $this->app['service.request.filter']->filter(
+                $this->getEntityRepository()
+            ),
             'list'
         );
     }
@@ -176,25 +171,5 @@ class RestEntityService
         return $this->app['orm.em']->getRepository(
             $this->getEntityName()
         );
-    }
-
-    /**
-     * @param $repository
-     * @param Request $request
-     * @return RepositoryFilterInterface
-     */
-    public function filterRepositoryByRequest(RepositoryFilterInterface $repository)
-    {
-        $filterLoader = new FilterLoader();
-
-        foreach ($filterLoader->getPlugins() as $pluginName => $pluginNamespace) {
-            $filterParams = $this->request->get($pluginName);
-
-            if (null !== $filterParams && is_array($filterParams)) {
-                $repository->filter(new $pluginNamespace($filterParams));
-            }
-        }
-
-        return $repository;
     }
 }

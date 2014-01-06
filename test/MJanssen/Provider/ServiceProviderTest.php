@@ -105,6 +105,16 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test if filter request service can be instantiated
+     */
+    public function testRequestFilterService()
+    {
+        $app = $this->getMockApplication();
+        $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $this->assertInstanceOf('MJanssen\Service\RequestFilterService', $app['service.request.filter']);
+    }
+
+    /**
      * Get a default silex application
      * @return Application
      */

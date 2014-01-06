@@ -118,6 +118,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
         $app['doctrine.extractor'] = $this->getExtractorServiceMock();
         $app['doctrine.hydrator'] = $this->getHydratorServiceMock();
         $app['service.request.validator'] = $this->getRequestValidatorServiceMock();
+        $app['service.request.filter'] = $this->getRequestFilterServiceMock();
 
         return $app;
     }
@@ -197,6 +198,22 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
         $service->expects($this->any())
                 ->method('validateRequest')
                 ->will($this->returnValue(null));
+
+        return $service;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getRequestFilterServiceMock()
+    {
+        $service = $this->getMock('MJanssen\Service\RequestFilterService', array('filter'), array(), '', false);
+
+        $service->expects($this->any())
+                ->method('filter')
+                ->will($this->returnValue(
+                    $this->getEntityRepository()
+                ));
 
         return $service;
     }
