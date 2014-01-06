@@ -63,13 +63,32 @@ class RequestFilterService
      */
     public function applyFilters(RepositoryFilterInterface $repository)
     {
-        $filterLoader = new FilterLoader();
 
-        foreach ($filterLoader->getPlugins() as $pluginName => $pluginNamespace) {
-            $filterParams = $this->request->get($pluginName);
+        $filterLoaderClassName = $this->request->attributes->get('filter');
+        if(empty($filterLoaderClassName)) {
+            return $repository;
+        }
 
-            if (null !== $filterParams && is_array($filterParams)) {
-                $repository->filter(new $pluginNamespace($filterParams));
+        $filterLoader = new $filterLoaderClassName;
+        $plugins = $filterLoader->getIterator();
+        $filterParams = $this->request->query->get('filter');
+
+        if (empty($filterParams)) {
+            return $repository;
+        }
+
+        $filterParams = json_decode($filterParams, true);
+
+        foreach ($plugins as $pluginName => $pluginNamespace) {
+
+            if (null !== $filterParams && isset($filterParams[$pluginName])) {
+
+                $options = array(
+                    'property' => $pluginName,
+                    'value' => $filterParams[$pluginName]
+                );
+
+                $repository->filter(new $pluginNamespace($options));
             }
         }
 
