@@ -35,8 +35,8 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
             array(
                 'data' => array($this->getOutput, $this->getOutput),
                 'pagination' => array(
-                    'page' => null,
-                    'limit' => null,
+                    'page' => 1,
+                    'limit' => 20,
                     'total' => 2
                 )
             )
@@ -150,7 +150,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
     {
         $entity = $this->createEntity(array('id' => 1, 'name' => 'foobaz'));
 
-        $repository = $this->getMock('\Doctrine\ORM\EntityRepository', array('findOneBy', 'findBy', 'count'), array(), '', false);
+        $repository = $this->getMock('\Doctrine\ORM\EntityRepository', array('findOneBy', 'findBy', 'count', 'paginate'), array(), '', false);
 
         $repository->expects($this->any())
                    ->method('findOneBy')
@@ -163,6 +163,10 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
         $repository->expects($this->any())
                    ->method('count')
                    ->will($this->returnValue(2));
+
+        $repository->expects($this->any())
+                    ->method('paginate')
+                    ->will($this->returnValue($repository));
 
         return $repository;
     }

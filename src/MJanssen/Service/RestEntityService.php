@@ -49,15 +49,16 @@ class RestEntityService
         );
 
         $page = $this->request->query->get('page');
-        $limit = $this->request->query->get('limit');
-
-        if(null !== $page) {
-            if(null === $limit || !is_numeric($limit)) {
-                $limit = 20;
-            }
-
-            $repository = $repository->paginate($page, $limit);
+        if(null === $page) {
+            $page = 1;
         }
+
+        $limit = $this->request->query->get('limit');
+        if(null === $limit || !is_numeric($limit)) {
+            $limit = 20;
+        }
+
+        $repository = $repository->paginate($page, $limit);
 
         return array(
             'data' => $this->app['doctrine.extractor']->extractEntities(
