@@ -44,10 +44,23 @@ class RestEntityService
      */
     public function getCollectionAction()
     {
+        $repository = $this->app['service.request.filter']->filter(
+            $this->getEntityRepository()
+        );
+
+        $page = $this->request->query->get('page');
+        $limit = $this->request->query->get('limit');
+
+        if(null !== $page) {
+            if(null === $limit || !is_numeric($limit)) {
+                $limit = 20;
+            }
+
+            $repository = $repository->paginate($page, $limit);
+        }
+
         return $this->app['doctrine.extractor']->extractEntities(
-            $this->app['service.request.filter']->filter(
-                $this->getEntityRepository()
-            ),
+            $repository,
             'list'
         );
     }
