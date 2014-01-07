@@ -57,38 +57,22 @@ class RequestFilterService
     }
 
     /**
-     * @param $repository
-     * @param Request $request
+     * @param RepositoryFilterInterface $repository
      * @return RepositoryFilterInterface
      */
     public function applyFilters(RepositoryFilterInterface $repository)
     {
-
         $filterLoaderClassName = $this->request->attributes->get('filter');
         if(empty($filterLoaderClassName)) {
             return $repository;
         }
 
         $filterLoader = new $filterLoaderClassName;
-        $plugins = $filterLoader->getIterator();
-        $filterParams = $this->request->query->get('filter');
 
-        if (empty($filterParams)) {
-            return $repository;
-        }
-
-        $filterParams = json_decode($filterParams, true);
-
-        foreach ($plugins as $pluginName => $pluginNamespace) {
-
-            if (null !== $filterParams && isset($filterParams[$pluginName])) {
-
-                $options = array(
-                    'property' => $pluginName,
-                    'value' => $filterParams[$pluginName]
-                );
-
-                $repository->filter(new $pluginNamespace($options));
+        foreach ($filterLoader->getIterator() as $pluginName => $pluginNamespace) {
+            $filterParams = $this->request->query->get($pluginName);
+            if (null !== $filterParams && is_array($filterParams)) {
+                $repository->filter(new $pluginNamespace($filterParams));
             }
         }
 
