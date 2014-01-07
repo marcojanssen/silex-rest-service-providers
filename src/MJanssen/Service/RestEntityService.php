@@ -59,9 +59,16 @@ class RestEntityService
             $repository = $repository->paginate($page, $limit);
         }
 
-        return $this->app['doctrine.extractor']->extractEntities(
-            $repository,
-            'list'
+        return array(
+            'data' => $this->app['doctrine.extractor']->extractEntities(
+                $repository,
+                'list'
+            ),
+            'pagination' => array(
+                'page' => $page,
+                'limit' => $limit,
+                'total' => $repository->count()
+            )
         );
     }
 
