@@ -71,7 +71,8 @@ class RequestFilterService
 
         foreach ($filterLoader->getIterator() as $pluginName => $pluginNamespace) {
             $filterParams = $this->request->query->get($pluginName);
-            if (null !== $filterParams && is_array($filterParams)) {
+
+            if (null !== $filterParams) {
                 $repository->filter(new $pluginNamespace($filterParams));
             }
         }
