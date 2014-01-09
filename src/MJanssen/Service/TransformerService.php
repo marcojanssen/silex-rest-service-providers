@@ -24,6 +24,11 @@ class TransformerService
     public function getTransformer()
     {
         $transformerClassName = $this->request->attributes->get('transformer');
+
+        if(null === $transformerClassName) {
+            return;
+        }
+
         try {
             $transformer = new $transformerClassName;
         } catch (Exception $e) {}
@@ -37,7 +42,12 @@ class TransformerService
      */
     public function transformHydrateData($data)
     {
-        return $this->getTransformer()->transformHydrateData($data);
+        $transformer = $this->getTransformer();
+        if(null !== $transformer) {
+            return $this->getTransformer()->transformHydrateData($data);
+        }
+
+        return $data;
     }
 
     /**
@@ -46,6 +56,11 @@ class TransformerService
      */
     public function transformExtractData($data)
     {
-        return $this->getTransformer()->transformExtractData($data);
+        $transformer = $this->getTransformer();
+        if(null !== $transformer) {
+            return $this->getTransformer()->transformExtractData($data);
+        }
+
+        return $data;
     }
 }
