@@ -7,11 +7,11 @@ interface TransformerInterface
      * @param array $data
      * @return mixed
      */
-    public function transformRequestData(array $data);
+    public function transformHydrateData(array $data);
 
     /**
      * @param array $data
      * @return mixed
      */
-    public function transformResponseData(array $data);
+    public function transformExtractData(array $data);
 } 

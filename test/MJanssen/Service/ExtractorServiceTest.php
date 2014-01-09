@@ -54,10 +54,10 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTransformer()
     {
-        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformRequestData'), array(), '', false);
+        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformExtractData', 'getTransformer'), array(), '', false);
 
         $transformer->expects($this->any())
-                    ->method('transformRequestData')
+                    ->method('transformExtractData')
                     ->will($this->returnValue($this->testData));
 
         return $transformer;

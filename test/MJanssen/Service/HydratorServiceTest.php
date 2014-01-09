@@ -6,19 +6,34 @@ use MJanssen\Fixtures\Entity\Test;
 
 class HydratorServiceTest extends \PHPUnit_Framework_TestCase
 {
+
+    protected $testData = array('id' => 1, 'name' => 'foo');
+
     /**
      * Test hydrate single entity
      */
     public function testHydrateEntity()
     {
         $serializer = SerializerBuilder::create()->build();
-        $service    = new HydratorService($serializer);
+        $service    = new HydratorService($serializer, $this->getTransformer());
 
-        $data = array('id' => 1, 'name' => 'foo');
+        $result = $service->hydrateEntity(json_encode($this->testData), 'MJanssen\Fixtures\Entity\Test');
 
-        $result = $service->hydrateEntity(json_encode($data), 'MJanssen\Fixtures\Entity\Test');
+        $this->assertEquals($this->createEntity($this->testData), $result);
+    }
 
-        $this->assertEquals($this->createEntity($data), $result);
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getTransformer()
+    {
+        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformHydrateData', 'getTransformer'), array(), '', false);
+
+        $transformer->expects($this->any())
+            ->method('transformHydrateData')
+            ->will($this->returnValue(json_encode($this->testData)));
+
+        return $transformer;
     }
 
     /**

@@ -25,7 +25,7 @@ class HydratorService
     public function hydrateEntity($data, $entityName)
     {
         return $this->serializer->deserialize(
-            $this->transformer->transformRequestData($data),
+            $this->transformer->transformHydrateData($data),
             $entityName,
             'json'
         );

@@ -41,7 +41,7 @@ class ExtractorService
     public function extractEntity($entity, $group)
     {
         $serializedContext = SerializationContext::create()->setGroups(array($group));
-        return $this->transformer->transformResponseData(
+        return $this->transformer->transformExtractData(
             json_decode($this->serializer->serialize($entity, 'json', $serializedContext), true)
         );
     }

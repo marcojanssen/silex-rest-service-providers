@@ -35,17 +35,17 @@ class TransformerService
      * @param $data
      * @return mixed
      */
-    public function transformRequestData($data)
+    public function transformHydrateData($data)
     {
-        return $this->getTransformer()->transformRequestData($data);
+        return $this->getTransformer()->transformHydrateData($data);
     }
 
     /**
      * @param $data
      * @return mixed
      */
-    public function transformResponseData($data)
+    public function transformExtractData($data)
     {
-        return $this->getTransformer()->transformRequestData($data);
+        return $this->getTransformer()->transformExtractData($data);
     }
 }
