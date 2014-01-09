@@ -6,20 +6,18 @@ use MJanssen\Fixtures\Entity\Test;
 
 class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
 {
+    protected $testData = array('id' => 1, 'name' => 'foo');
+
     /**
      * Test extract single entity
      */
     public function testExtractEntity()
     {
-        $serializer = SerializerBuilder::create()->build();
-        $service    = new ExtractorService($serializer);
-
-        $data = array('id' => 1, 'name' => 'foo');
-        $entity = $this->createEntity($data);
-
+        $service = new ExtractorService($this->getSerializer(), $this->getTransformer());
+        $entity = $this->createEntity($this->testData);
         $result = $service->extractEntity($entity, 'foo');
 
-        $this->assertEquals($data, $result);
+        $this->assertEquals($this->testData, $result);
     }
 
     /**
@@ -27,12 +25,11 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtractEntities()
     {
-        $serializer = SerializerBuilder::create()->build();
-        $service    = new ExtractorService($serializer);
+        $service = new ExtractorService($this->getSerializer(), $this->getTransformer());
 
         $data = array(
-            array('id' => 1, 'name' => 'foo'),
-            array('id' => 2, 'name' => 'baz')
+            $this->testData,
+            $this->testData
         );
         $entities = array(
             $this->createEntity($data[0]),
@@ -42,6 +39,28 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
         $result = $service->extractEntities($entities, 'foo');
 
         $this->assertEquals($data, $result);
+    }
+
+    /**
+     * @return \JMS\Serializer\Serializer
+     */
+    protected function getSerializer()
+    {
+        return SerializerBuilder::create()->build();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getTransformer()
+    {
+        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformRequestData'), array(), '', false);
+
+        $transformer->expects($this->any())
+                    ->method('transformRequestData')
+                    ->will($this->returnValue($this->testData));
+
+        return $transformer;
     }
 
     /**

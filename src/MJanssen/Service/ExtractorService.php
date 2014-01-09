@@ -7,13 +7,15 @@ use JMS\Serializer\SerializationContext;
 class ExtractorService
 {
     protected $serializer;
+    protected $transformer;
 
     /**
      * @param Serializer $serializer
      */
-    public function __construct(Serializer $serializer)
+    public function __construct(Serializer $serializer, TransformerService $transformer)
     {
         $this->serializer = $serializer;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -39,6 +41,8 @@ class ExtractorService
     public function extractEntity($entity, $group)
     {
         $serializedContext = SerializationContext::create()->setGroups(array($group));
-        return json_decode($this->serializer->serialize($entity, 'json', $serializedContext), true);
+        return $this->transformer->transformResponseData(
+            json_decode($this->serializer->serialize($entity, 'json', $serializedContext), true)
+        );
     }
 }

@@ -7,6 +7,7 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Construction\DoctrineObjectConstructor;
 use JMS\Serializer\Construction\UnserializeObjectConstructor;
 use MJanssen\Service\ExtractorService;
+use MJanssen\Service\TransformerService;
 use MJanssen\Service\HydratorService;
 use MJanssen\Service\ResolverService;
 use MJanssen\Filters\PropertyFilter;
@@ -55,12 +56,16 @@ class ServiceProvider implements ServiceProviderInterface
             return $createSerializer->build();
         });
 
+        $app['service.transformer'] = $app->share(function($app) {
+            return new TransformerService($app['request']);
+        });
+
         $app['doctrine.extractor'] = $app->share(function($app) {
-            return new ExtractorService($app['serializer']);
+            return new ExtractorService($app['serializer'], $app['service.transformer']);
         });
 
         $app['doctrine.hydrator'] = $app->share(function($app) {
-            return new HydratorService($app['serializer']);
+            return new HydratorService($app['serializer'], $app['service.transformer']);
         });
 
         $app['doctrine.resolver'] = $app->share(function($app) {
