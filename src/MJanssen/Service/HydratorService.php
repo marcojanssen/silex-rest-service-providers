@@ -6,13 +6,15 @@ use JMS\Serializer\Serializer;
 class HydratorService
 {
     protected $serializer;
+    protected $transformer;
 
     /**
      * @param Serializer $serializer
      */
-    public function __construct(Serializer $serializer)
+    public function __construct(Serializer $serializer, TransformerService $transformer)
     {
         $this->serializer = $serializer;
+        $this->transformer = $transformer;
     }
 
     /**
@@ -22,6 +24,10 @@ class HydratorService
      */
     public function hydrateEntity($data, $entityName)
     {
-        return $this->serializer->deserialize($data, $entityName, 'json');
+        return $this->serializer->deserialize(
+            $this->transformer->transformHydrateData($data),
+            $entityName,
+            'json'
+        );
     }
 }
