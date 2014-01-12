@@ -111,7 +111,7 @@ abstract class AbstractControllerTest extends \PHPUnit_Framework_TestCase
         $serviceRestEntity = $this->getMock('MJanssen\Service\RestEntityService', array(), array($this->getMockRequest(), $app));
 
         $serviceRestEntity->expects($this->any())
-            ->method('get')
+            ->method('getAction')
             ->will(
                 $this->returnValue(
                     array('foo' => 'baz')
@@ -119,21 +119,26 @@ abstract class AbstractControllerTest extends \PHPUnit_Framework_TestCase
             );
 
         $serviceRestEntity->expects($this->any())
-            ->method('getCollection')
+            ->method('getCollectionAction')
             ->will(
                 $this->returnValue(
                     array(
-                        array('foo' => 'baz'), array('foo' => 'baz')
+                        'data' => array(array('foo' => 'baz'), array('foo' => 'baz')),
+                        'pagination' => array(
+                            'page' => 1,
+                            'limit' => 20,
+                            'total' => 2
+                        )
                     )
                 )
             );
 
         $serviceRestEntity->expects($this->any())
-            ->method('delete')
+            ->method('deleteAction')
             ->will($this->returnValue(true));
 
         $serviceRestEntity->expects($this->any())
-            ->method('put')
+            ->method('putAction')
             ->will(
                 $this->returnValue(
                     array('foo' => 'baz')
@@ -141,7 +146,7 @@ abstract class AbstractControllerTest extends \PHPUnit_Framework_TestCase
             );
 
         $serviceRestEntity->expects($this->any())
-            ->method('post')
+            ->method('postAction')
             ->will(
                 $this->returnValue(
                     array('foo' => 'baz')

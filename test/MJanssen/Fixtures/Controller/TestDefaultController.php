@@ -4,7 +4,7 @@ namespace MJanssen\Fixtures\Controller;
 use MJanssen\Controller\RestController;
 use MJanssen\Controller\RestControllerInterface;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class TestDefaultController extends RestController implements RestControllerInterface
@@ -21,7 +21,7 @@ class TestDefaultController extends RestController implements RestControllerInte
      */
     public function getAction(Request $request, Application $app, $id)
     {
-        return new Response(
+        return new JsonResponse(
             $this->get($app, $id)
         );
     }
@@ -36,7 +36,7 @@ class TestDefaultController extends RestController implements RestControllerInte
      */
     public function getCollectionAction(Request $request, Application $app)
     {
-        return new Response(
+        return new JsonResponse(
             $this->getCollection($app)
         );
     }
@@ -53,7 +53,7 @@ class TestDefaultController extends RestController implements RestControllerInte
     public function deleteAction(Request $request, Application $app, $id)
     {
         if($this->delete($app, $id)) {
-            return new Response('',204);
+            return new JsonResponse('',204);
         }
     }
 
@@ -67,7 +67,7 @@ class TestDefaultController extends RestController implements RestControllerInte
      */
     public function postAction(Request $request, Application $app)
     {
-        return new Response(
+        return new JsonResponse(
             $this->post($app)
         );
     }
@@ -83,7 +83,7 @@ class TestDefaultController extends RestController implements RestControllerInte
      */
     public function putAction(Request $request, Application $app, $id)
     {
-        return new Response(
+        return new JsonResponse(
             $this->put($app, $id)
         );
     }
