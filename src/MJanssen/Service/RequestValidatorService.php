@@ -39,7 +39,15 @@ class RequestValidatorService
         );
 
         if($this->validator->hasErrors()) {
-            return array('errors' => $this->validator->getErrorResponse());
+            $errors = $this->validator->getErrors();
+
+            $errorFormatted = array();
+            foreach($errors as $error) {
+                $name = str_replace(array('[',']'),'',$error->getPropertyPath());
+                $errorFormatted[$name][] = $error->getMessage();
+            }
+
+            return array('errors' => $errorFormatted);
         }
 
         return null;

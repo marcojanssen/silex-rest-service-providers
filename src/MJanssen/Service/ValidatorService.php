@@ -104,22 +104,6 @@ class ValidatorService
     }
 
     /**
-     * Return the errors in a response ready format
-     *
-     * @return array with errors
-     */
-    public function getErrorResponse()
-    {
-        $errorResponse = array();
-
-        foreach ($this->getErrors() as $error) {
-            $errorResponse[] = $error->getPropertyPath().' '.$error->getMessage()."\n";
-        }
-
-        return $errorResponse;
-    }
-
-    /**
      * Check if incoming data is JSON
      * @param $string
      * @return bool

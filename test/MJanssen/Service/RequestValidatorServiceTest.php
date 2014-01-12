@@ -35,8 +35,8 @@ class RequestValidatorServiceTest extends \PHPUnit_Framework_TestCase
 
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getContent'));
         $request->expects($this->any())
-            ->method('getContent')
-            ->will($this->returnValue(json_encode(array('id' => 'should be numeric', 'name' => 'foo', 'baz' => 'does not exist'))));
+                ->method('getContent')
+                ->will($this->returnValue(json_encode(array('id' => 'should be numeric', 'name' => 'foo', 'baz' => 'does not exist'))));
         $request->attributes->set('validator', 'MJanssen\Fixtures\Validator\TestValidator');
 
         $requestValidator = new RequestValidatorService($app['service.validator'], $request);
@@ -45,9 +45,15 @@ class RequestValidatorServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             array(
                 'errors' => array(
-                    '[id] This value should be of type numeric.'.PHP_EOL,
-                    '[name] This value is too short. It should have 5 characters or more.'.PHP_EOL,
-                    '[baz] This field was not expected.'.PHP_EOL
+                    'id' => array(
+                        'This value should be of type numeric.'
+                    ),
+                    'name' => array(
+                        'This value is too short. It should have 5 characters or more.'
+                    ),
+                    'baz' => array(
+                        'This field was not expected.'
+                    )
                 )
             ),
             $response
