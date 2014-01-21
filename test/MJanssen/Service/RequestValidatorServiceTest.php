@@ -45,13 +45,13 @@ class RequestValidatorServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(
             array(
                 'errors' => array(
-                    'id' => array(
+                    '[id]' => array(
                         'This value should be of type numeric.'
                     ),
-                    'name' => array(
+                    '[name]' => array(
                         'This value is too short. It should have 5 characters or more.'
                     ),
-                    'baz' => array(
+                    '[baz]' => array(
                         'This field was not expected.'
                     )
                 )
