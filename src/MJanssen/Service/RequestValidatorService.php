@@ -43,8 +43,7 @@ class RequestValidatorService
 
             $errorFormatted = array();
             foreach($errors as $error) {
-                $name = str_replace(array('[',']'),'',$error->getPropertyPath());
-                $errorFormatted[$name][] = $error->getMessage();
+                $errorFormatted[$error->getPropertyPath()][] = $error->getMessage();
             }
 
             return array('errors' => $errorFormatted);
