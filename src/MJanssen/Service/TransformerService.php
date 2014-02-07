@@ -1,6 +1,7 @@
 <?php
 namespace MJanssen\Service;
 
+use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class TransformerService
@@ -13,9 +14,10 @@ class TransformerService
     /**
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Application $app)
     {
         $this->request = $request;
+        $this->app = $app;
     }
 
     /**
@@ -44,7 +46,7 @@ class TransformerService
     {
         $transformer = $this->getTransformer();
         if(null !== $transformer) {
-            return $this->getTransformer()->transformHydrateData($data);
+            return $this->getTransformer()->transformHydrateData($data, $this->app);
         }
 
         return $data;
@@ -58,7 +60,7 @@ class TransformerService
     {
         $transformer = $this->getTransformer();
         if(null !== $transformer) {
-            return $this->getTransformer()->transformExtractData($data);
+            return $this->getTransformer()->transformExtractData($data, $this->app);
         }
 
         return $data;

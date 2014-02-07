@@ -1,13 +1,15 @@
 <?php
 namespace MJanssen\Fixtures\Transformer;
 
+use Silex\Application;
+
 class TestTransformer implements \MJanssen\Transformer\TransformerInterface
 {
     /**
      * @param array $data
      * @return array|mixed
      */
-    public function transformHydrateData(array $data)
+    public function transformHydrateData($data, Application $app)
     {
         return $data;
     }
@@ -16,7 +18,7 @@ class TestTransformer implements \MJanssen\Transformer\TransformerInterface
      * @param array $data
      * @return array|mixed
      */
-    public function transformExtractData(array $data)
+    public function transformExtractData($data, Application $app)
     {
         return $data;
     }

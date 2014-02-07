@@ -57,7 +57,7 @@ class ServiceProvider implements ServiceProviderInterface
         });
 
         $app['service.transformer'] = $app->share(function($app) {
-            return new TransformerService($app['request']);
+            return new TransformerService($app['request'], $app);
         });
 
         $app['doctrine.extractor'] = $app->share(function($app) {

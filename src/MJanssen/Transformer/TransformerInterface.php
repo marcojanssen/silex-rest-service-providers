@@ -1,17 +1,19 @@
 <?php
 namespace MJanssen\Transformer;
 
+use Silex\Application;
+
 interface TransformerInterface
 {
     /**
      * @param array $data
      * @return mixed
      */
-    public function transformHydrateData(array $data);
+    public function transformHydrateData($data, Application $app);
 
     /**
      * @param array $data
      * @return mixed
      */
-    public function transformExtractData(array $data);
+    public function transformExtractData($data, Application $app);
 } 
