@@ -13,6 +13,12 @@ class RestEntityService
 {
     protected $request;
     protected $app;
+    
+    /**
+     *
+     * @var string
+     */
+    protected $field = 'id';
 
     /**
      * @param Request $request
@@ -26,6 +32,7 @@ class RestEntityService
 
     /**
      * @param $identifier
+     * @param $field
      * @return mixed
      */
     public function getAction($identifier)
@@ -146,12 +153,12 @@ class RestEntityService
      * @param string $field
      * @return mixed
      */
-    public function getEntityFromRepository($id, $field = 'id')
+    public function getEntityFromRepository($id)
     {
         $repository = $this->getEntityRepository();
 
         $entity = $repository->findOneBy(
-            array($field => $id)
+            array($this->getField() => $id)
         );
 
         return $entity;
@@ -193,4 +200,24 @@ class RestEntityService
             $this->getEntityName()
         );
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * 
+     * @param string $field
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
+
+
 }
