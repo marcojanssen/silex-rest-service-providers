@@ -14,6 +14,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetAction()
     {
         $service = $this->getService();
+        $service->setFieldNameIdentifier('id');
         $response = $service->getAction(1);
 
         $this->assertEquals(
