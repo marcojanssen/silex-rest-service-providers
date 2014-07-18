@@ -2,7 +2,7 @@ filter:
     paths: [src/*, test/*]
     excluded_paths: [vendor/*]
 before_commands:
-    - 'composer install --dev --prefer-source'
+    - 'composer install --dev --no-interaction'
 tools:
     php_mess_detector: true
     php_code_sniffer: true
