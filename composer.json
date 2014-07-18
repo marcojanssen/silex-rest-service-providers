@@ -12,17 +12,17 @@
     "require": {
         "php": ">=5.3.0",
         "dflydev/doctrine-orm-service-provider": "1.0.*",
-        "doctrine/orm": "2.4.*",
-        "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.0.*",
+        "doctrine/orm": "~2.3",
+        "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.2.*",
         "jms/serializer": "0.16.0",
         "jurjean/spray-persistence-bundle": "2.*",
-        "silex/silex": "1.1.*",
+        "silex/silex": "1.2.*",
         "symfony/finder": "~2.3",
         "symfony/process": "~2.3",
         "symfony/property-access": "~2.3",
         "symfony/validator": "~2.3",
-        "zendframework/zend-filter": "2.*",
-        "zendframework/zend-loader": "2.*",
+        "zendframework/zend-filter": "~2.3",
+        "zendframework/zend-loader": "~2.3",
         "zircote/swagger-php": "0.8.*"
     },
     "require-dev": {
