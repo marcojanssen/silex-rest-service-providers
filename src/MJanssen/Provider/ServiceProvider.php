@@ -1,20 +1,19 @@
 <?php
 namespace MJanssen\Provider;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Construction\DoctrineObjectConstructor;
 use JMS\Serializer\Construction\UnserializeObjectConstructor;
+use JMS\Serializer\SerializerBuilder;
 use MJanssen\Service\ExtractorService;
-use MJanssen\Service\TransformerService;
 use MJanssen\Service\HydratorService;
-use MJanssen\Service\ResolverService;
-use MJanssen\Filters\PropertyFilter;
-use MJanssen\Service\RequestValidatorService;
 use MJanssen\Service\RequestFilterService;
+use MJanssen\Service\RequestValidatorService;
+use MJanssen\Service\ResolverService;
 use MJanssen\Service\RestEntityService;
+use MJanssen\Service\TransformerService;
 use MJanssen\Service\ValidatorService;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
 
 /**
  * Class ServiceProvider
