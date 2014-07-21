@@ -1,11 +1,9 @@
 <?php
 namespace MJanssen\Controller;
 
+use RuntimeException;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use RuntimeException;
 
 /**
  * Class RestController
@@ -128,7 +126,7 @@ abstract class RestController
      * @param Application $app
      * @param null $id
      * @return bool|mixed
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function resolveAction(Request $request, Application $app, $id = null)
     {
