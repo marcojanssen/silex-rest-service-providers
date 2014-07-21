@@ -5,11 +5,20 @@ use JMS\Serializer\Serializer;
 
 class HydratorService
 {
+    
+    /**
+     * @var Serializer 
+     */
     protected $serializer;
+    
+    /**
+     * @var TransformerService
+     */
     protected $transformer;
 
     /**
      * @param Serializer $serializer
+     * @param TransformerService $transformer
      */
     public function __construct(Serializer $serializer, TransformerService $transformer)
     {
@@ -19,7 +28,7 @@ class HydratorService
 
     /**
      * @param $data
-     * @param $entity
+     * @param $entityName
      * @return object
      */
     public function hydrateEntity($data, $entityName)
