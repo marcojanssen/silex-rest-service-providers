@@ -3,12 +3,11 @@ namespace MJanssen\Service;
 
 use MJanssen\Service\ValidatorService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RequestValidatorService
 {
     /**
-     * @var Validator
+     * @var ValidatorService
      */
     protected $validator;
 
@@ -18,7 +17,7 @@ class RequestValidatorService
     protected $request;
 
     /**
-     * @param Validator $validator
+     * @param ValidatorService $validator
      * @param Request $request
      */
     public function __construct(ValidatorService $validator, Request $request)
@@ -32,7 +31,9 @@ class RequestValidatorService
      */
     public function validateRequest()
     {
-        $this->validator->setValidatorConstrainClass($this->request->attributes->get('validator'));
+        $this->validator->setValidatorConstrainClass(
+            $this->request->attributes->get('validator')
+        );
 
         $this->validator->validate(
             $this->request->getContent()

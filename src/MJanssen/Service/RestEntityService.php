@@ -1,17 +1,19 @@
 <?php
 namespace MJanssen\Service;
 
-use MJanssen\Filters\FilterLoader;
 use Silex\Application;
-use Spray\PersistenceBundle\EntityFilter\Common\Ascending;
-use Spray\PersistenceBundle\Repository\RepositoryFilter;
-use Spray\PersistenceBundle\Repository\RepositoryFilterInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class RestEntityService
 {
+    /**
+     * @var type Request
+     */
     protected $request;
+    
+    /**
+     * @var Application 
+     */
     protected $app;
     
     /**
@@ -163,7 +165,6 @@ class RestEntityService
 
     /**
      * @param $entity
-     * @param $app
      * @param $id
      */
     public function isValidEntity($entity, $id)
@@ -209,6 +210,4 @@ class RestEntityService
     {
         $this->fieldNameIdentifier = $fieldNameIdentifier;
     }
-
-
 }

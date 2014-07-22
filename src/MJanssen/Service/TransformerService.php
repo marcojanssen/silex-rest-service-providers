@@ -1,15 +1,22 @@
 <?php
 namespace MJanssen\Service;
 
+use Exception;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class TransformerService
 {
     /**
-     * @var string
+     * @var Request
      */
     protected $request;
+
+    /**
+     * @var Application 
+     */
+    protected $app;
+
 
     /**
      * @param Request $request

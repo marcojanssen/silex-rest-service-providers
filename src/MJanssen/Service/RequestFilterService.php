@@ -1,12 +1,11 @@
 <?php
 namespace MJanssen\Service;
 
+use Exception;
 use Spray\PersistenceBundle\Repository\RepositoryFilter;
 use Spray\PersistenceBundle\Repository\RepositoryFilterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Zend\Loader\PluginClassLoader;
-
-use MJanssen\Filters\FilterLoader;
 
 /**
  * Class RequestFilterService
@@ -26,7 +25,7 @@ class RequestFilterService
     }
 
     /**
-     * @param PluginClassLoader $validatorClassName
+     * @param PluginClassLoader $filterLoaderClass
      */
     public function setFilterLoaderClass(PluginClassLoader $filterLoaderClass)
     {

@@ -3,14 +3,14 @@ namespace MJanssen\Service;
 
 use Doctrine\ORM\EntityManager;
 use Exception;
-use UnexpectedValueException;
 use Symfony\Component\PropertyAccess\StringUtil;
+use UnexpectedValueException;
 
 
 class ResolverService
 {
     /**
-     * @var EntityManagerInterface
+     * @var EntityManager
      */
     private $entityManager;
 
@@ -41,7 +41,7 @@ class ResolverService
      * @param $namespaceAlias
      * @param $name
      * @return string
-     * @throws \UnexpectedValueException
+     * @throws UnexpectedValueException
      */
     public function getEntityClassName($namespaceAlias, $name)
     {
@@ -67,8 +67,8 @@ class ResolverService
 
     /**
      * format the class namespace
-     * @param $namespace
-     * @param $name
+     * @param string $namespace
+     * @param sring $name
      * @return string
      */
     private function formatClassName($namespace, $name)

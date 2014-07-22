@@ -1,15 +1,16 @@
 <?php
 namespace MJanssen\Service;
 
-use Symfony\Component\Validator\Validator;
+use RuntimeException;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validator;
 
 class ValidatorService
 {
     protected $errors = array();
 
     /**
-     * @var \Symfony\Component\Validator\Validator
+     * @var Validator
      */
     protected $validator;
 
@@ -48,6 +49,7 @@ class ValidatorService
      *
      * @param $validatorName
      * @param $data
+     * @throws RuntimeException
      */
     public function validate($data)
     {
@@ -56,7 +58,7 @@ class ValidatorService
         }
 
         if(!is_object($this->getValidatorConstrainClass())) {
-            throw new \RuntimeException('No valid validator class set');
+            throw new RuntimeException('No valid validator class set');
         }
 
         $this->setErrors(
@@ -94,9 +96,7 @@ class ValidatorService
     }
 
     /**
-     * @param array $errors
-     *
-     * @throws \Exception
+     * @param ConstraintViolationList $errors
      */
     public function setErrors(ConstraintViolationList $errors)
     {

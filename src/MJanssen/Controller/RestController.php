@@ -1,11 +1,9 @@
 <?php
 namespace MJanssen\Controller;
 
+use RuntimeException;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use RuntimeException;
 
 /**
  * Class RestController
@@ -128,32 +126,28 @@ abstract class RestController
      * @param Application $app
      * @param null $id
      * @return bool|mixed
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws RuntimeException
      */
     public function resolveAction(Request $request, Application $app, $id = null)
     {
-        $method = $request->getMethod();
-
-        if('GET' === $method) {
-            if(null === $id) {
-                return $this->getCollectionAction($request, $app);
-            }
-
-            return $this->getAction($request, $app, $id);
+        switch ($request->getMethod()) {
+            case 'GET' :
+                if(null === $id) {
+                    return $this->getCollectionAction($request, $app);
+                }
+                return $this->getAction($request, $app, $id);
+    
+            case 'POST' :
+                return $this->postAction($request, $app);
+                
+            case 'PUT' :
+                return $this->putAction($request, $app, $id);
+                
+            case 'DELETE' :
+                return $this->deleteAction($request, $app, $id);
+                
+            default :
+                throw new RuntimeException('Invalid method specified');
         }
-
-        if('POST' === $method) {
-            return $this->postAction($request, $app);
-        }
-
-        if('PUT' === $method) {
-            return $this->putAction($request, $app, $id);
-        }
-
-        if('DELETE' === $method) {
-            return $this->deleteAction($request, $app, $id);
-        }
-
-        throw new RuntimeException('Invalid method specified');
     }
 }
