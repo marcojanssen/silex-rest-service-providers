@@ -25,7 +25,7 @@ class RequestFilterService
     }
 
     /**
-     * @param PluginClassLoader $validatorClassName
+     * @param PluginClassLoader $filterLoaderClass
      */
     public function setFilterLoaderClass(PluginClassLoader $filterLoaderClass)
     {
