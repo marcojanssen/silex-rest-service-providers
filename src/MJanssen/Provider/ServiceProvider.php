@@ -1,20 +1,21 @@
 <?php
 namespace MJanssen\Provider;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Construction\DoctrineObjectConstructor;
 use JMS\Serializer\Construction\UnserializeObjectConstructor;
-use MJanssen\Service\ExtractorService;
-use MJanssen\Service\TransformerService;
-use MJanssen\Service\HydratorService;
-use MJanssen\Service\ResolverService;
+use JMS\Serializer\Handler\HandlerRegistry;
+use JMS\Serializer\SerializerBuilder;
 use MJanssen\Filters\PropertyFilter;
-use MJanssen\Service\RequestValidatorService;
+use MJanssen\Service\ExtractorService;
+use MJanssen\Service\HydratorService;
 use MJanssen\Service\RequestFilterService;
+use MJanssen\Service\RequestValidatorService;
+use MJanssen\Service\ResolverService;
 use MJanssen\Service\RestEntityService;
+use MJanssen\Service\TransformerService;
 use MJanssen\Service\ValidatorService;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
 
 /**
  * Class ServiceProvider
@@ -41,6 +42,17 @@ class ServiceProvider implements ServiceProviderInterface
 
             if(isset($app['serializer.cache.path'])) {
                 $createSerializer->setCacheDir($app['serializer.cache.path']);
+            }
+
+            if (isset($app['serializer.handlers']) && is_array($app['serializer.handlers'])) {
+                $createSerializer->addDefaultHandlers();
+                $createSerializer->configureHandlers(
+                    function(HandlerRegistry $handlerRegistry) use ($app) {
+                        foreach ($app['serializer.handlers'] as $handlerClass) {
+                            $handlerRegistry->registerSubscribingHandler(new $handlerClass);
+                        }
+                    }
+                );
             }
 
             if(isset($app['debug'])) {
