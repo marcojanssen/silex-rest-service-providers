@@ -1,11 +1,13 @@
 <?php
 namespace MJanssen\Provider;
 
-use Silex\Application;
 use JMS\Serializer\SerializerBuilder;
+use PHPUnit_Framework_TestCase;
+use Silex\Application;
 use Silex\Provider\ValidatorServiceProvider;
+use stdClass;
 
-class ServiceProviderTest extends \PHPUnit_Framework_TestCase
+class ServiceProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test if services are registered
@@ -32,6 +34,19 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getMockApplication();
 
         $this->assertInstanceOf('JMS\Serializer\Serializer', $app['serializer']);
+    }
+
+    public function testSerializerReceivesCustomHandlersViaConfiguration()
+    {
+        $app = $this->getMockApplication();
+        $app['serializer.handlers'] = array(
+            'MJanssen\Fixtures\Serializer\StdClassHandler'
+        );
+        
+        $class      = new stdClass;
+        $serializer = $app['serializer'];
+        $serializer->serialize($class, 'json');
+        $this->assertTrue($class->serialized);
     }
 
     /**
