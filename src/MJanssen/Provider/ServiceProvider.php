@@ -60,12 +60,21 @@ class ServiceProvider implements ServiceProviderInterface
             }
 
             if(isset($app['doctrine'])) {
-                $fallbackConstructor       = new UnserializeObjectConstructor();
-                $doctrineObjectConstructor = new DoctrineObjectConstructor($app['doctrine'], $fallbackConstructor);
-                $createSerializer->setObjectConstructor($doctrineObjectConstructor);
+                $createSerializer->setObjectConstructor($app['serializer.object.constructor']);
             }
 
             return $createSerializer->build();
+        });
+
+        $app['serializer.object.constructor'] = $app->share(function($app) {
+
+            $objectConstructor = new UnserializeObjectConstructor();
+
+            if(isset($app['doctrine'])) {
+                $objectConstructor = new DoctrineObjectConstructor($app['doctrine'], $objectConstructor);
+            }
+
+            return $objectConstructor;
         });
 
         $app['service.transformer'] = $app->share(function($app) {

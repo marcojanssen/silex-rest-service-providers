@@ -17,6 +17,7 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $app = $this->getMockApplication();
 
         $this->assertTrue(isset($app['serializer']));
+        $this->assertTrue(isset($app['serializer.object.constructor']));
         $this->assertTrue(isset($app['doctrine.extractor']));
         $this->assertTrue(isset($app['doctrine.hydrator']));
         $this->assertTrue(isset($app['doctrine.resolver']));
@@ -26,14 +27,27 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($app['foo']));
     }
 
-    /**
-     * Test if extractor service can be instantiated
-     */
-    public function testSerializerService()
+    public function testSerializerServiceInstantiation()
     {
         $app = $this->getMockApplication();
 
         $this->assertInstanceOf('JMS\Serializer\Serializer', $app['serializer']);
+    }
+
+    public function testSerializerDefaultObjectConstructorInstantiation()
+    {
+        $app = $this->getMockApplication();
+
+
+        $this->assertInstanceOf('JMS\Serializer\Construction\UnserializeObjectConstructor', $app['serializer.object.constructor']);
+    }
+
+    public function testSerializerDoctrineObjectConstructorInstantiation()
+    {
+        $app = $this->getMockApplication();
+        $app['doctrine'] = $this->getMock('\Doctrine\Common\Persistence\ManagerRegistry');
+
+        $this->assertInstanceOf('JMS\Serializer\Construction\DoctrineObjectConstructor', $app['serializer.object.constructor']);
     }
 
     public function testSerializerReceivesCustomHandlersViaConfiguration()
@@ -106,6 +120,14 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
             array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
 
         $this->assertInstanceOf('MJanssen\Service\ResolverService', $app['doctrine.resolver']);
+    }
+
+    public function testRestEntityServiceInstantiation()
+    {
+        $app = $this->getMockApplication();
+
+        $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $this->assertInstanceOf('MJanssen\Service\RestEntityService', $app['service.rest.entity']);
     }
 
     /**
