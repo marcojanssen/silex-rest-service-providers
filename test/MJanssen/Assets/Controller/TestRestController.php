@@ -1,5 +1,5 @@
 <?php
-namespace MJanssen\Fixtures\Controller;
+namespace MJanssen\Assets\Controller;
 
 use MJanssen\Controller\RestController;
 use MJanssen\Controller\RestControllerInterface;

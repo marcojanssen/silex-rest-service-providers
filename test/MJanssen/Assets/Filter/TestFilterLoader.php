@@ -1,5 +1,5 @@
 <?php
-namespace MJanssen\Fixtures\Filter;
+namespace MJanssen\Assets\Filter;
 
 use Zend\Loader\PluginClassLoader;
 

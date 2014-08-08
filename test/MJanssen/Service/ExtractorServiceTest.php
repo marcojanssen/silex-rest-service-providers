@@ -2,7 +2,7 @@
 namespace MJanssen\Service;
 
 use JMS\Serializer\SerializerBuilder;
-use MJanssen\Fixtures\Entity\Test;
+use MJanssen\Assets\Entity\Test;
 
 class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
 {

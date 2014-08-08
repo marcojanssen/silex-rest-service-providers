@@ -2,7 +2,7 @@
 namespace MJanssen\Service;
 
 use Silex\Application;
-use MJanssen\Fixtures\Entity\Test;
+use MJanssen\Assets\Entity\Test;
 
 class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -181,7 +181,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
 
         $service->expects($this->any())
                 ->method('getEntityClassName')
-                ->will($this->returnValue('MJanssen\Fixtures\Entity\Test'));
+                ->will($this->returnValue('MJanssen\Assets\Entity\Test'));
 
         return $service;
     }

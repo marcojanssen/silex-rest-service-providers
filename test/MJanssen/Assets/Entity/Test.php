@@ -1,5 +1,5 @@
 <?php
-namespace MJanssen\Fixtures\Entity;
+namespace MJanssen\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Type;

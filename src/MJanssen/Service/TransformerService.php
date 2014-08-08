@@ -7,12 +7,18 @@ use Symfony\Component\HttpFoundation\Request;
 class TransformerService
 {
     /**
-     * @var string
+     * @var \Silex\Application
+     */
+    protected $app;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
      * @param Request $request
+     * @param Application $app
      */
     public function __construct(Request $request, Application $app)
     {
@@ -46,7 +52,7 @@ class TransformerService
     {
         $transformer = $this->getTransformer();
         if(null !== $transformer) {
-            return $this->getTransformer()->transformHydrateData($data, $this->app);
+            return $this->getTransformer()->transformHydrateData($this->app, $data);
         }
 
         return $data;
@@ -60,7 +66,7 @@ class TransformerService
     {
         $transformer = $this->getTransformer();
         if(null !== $transformer) {
-            return $this->getTransformer()->transformExtractData($data, $this->app);
+            return $this->getTransformer()->transformExtractData($this->app, $data);
         }
 
         return $data;

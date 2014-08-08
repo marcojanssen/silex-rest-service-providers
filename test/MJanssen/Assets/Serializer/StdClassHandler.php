@@ -1,6 +1,6 @@
 <?php
 
-namespace MJanssen\Fixtures\Serializer;
+namespace MJanssen\Assets\Serializer;
 
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;

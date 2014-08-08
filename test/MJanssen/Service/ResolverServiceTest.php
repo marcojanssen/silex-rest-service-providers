@@ -28,13 +28,13 @@ class ResolverServiceTest extends \PHPUnit_Framework_TestCase
         $config = $this->getConfigMock();
         $config->expects($this->any())
             ->method('getEntityNamespace')
-            ->will($this->returnValue('MJanssen\Fixtures\Entity'));
+            ->will($this->returnValue('MJanssen\Assets\Entity'));
         $em = $this->getEntityManagerMock($config);
 
         $resolverService = new ResolverService($em);
         $resolvedEntity = $resolverService->resolveEntity('test', 'Test');
 
-        $this->assertEquals('MJanssen\Fixtures\Entity\Test', $resolvedEntity);
+        $this->assertEquals('MJanssen\Assets\Entity\Test', $resolvedEntity);
     }
 
     /**

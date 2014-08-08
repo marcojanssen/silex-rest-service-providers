@@ -53,7 +53,7 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
     {
         $app = $this->getMockApplication();
         $app['serializer.handlers'] = array(
-            'MJanssen\Fixtures\Serializer\StdClassHandler'
+            'MJanssen\Assets\Serializer\StdClassHandler'
         );
         
         $class      = new stdClass;

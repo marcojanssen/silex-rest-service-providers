@@ -1,7 +1,7 @@
 <?php
 namespace MJanssen\Controller;
 
-use MJanssen\Fixtures\Controller\TestDefaultController;
+use MJanssen\Assets\Controller\TestDefaultController;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 

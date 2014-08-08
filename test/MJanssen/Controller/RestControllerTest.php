@@ -1,7 +1,7 @@
 <?php
 namespace MJanssen\Controller;
 
-use MJanssen\Fixtures\Controller\TestRestController;
+use MJanssen\Assets\Controller\TestRestController;
 use Silex\Application;
 
 /**

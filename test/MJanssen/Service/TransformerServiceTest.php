@@ -1,24 +1,17 @@
 <?php
 namespace MJanssen\Service;
 
-use JMS\Serializer\SerializerBuilder;
-use MJanssen\Fixtures\Entity\Test;
-use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class TransformerServiceTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test transforming hydrated data
-     */
-    public function testTransformData()
+    public function testTransform()
     {
         $request = new Request;
-        $request->attributes->set('transformer', 'MJanssen\Fixtures\Transformer\TestTransformer');
+        $request->attributes->set('transformer', 'MJanssen\Assets\Transformer\TestTransformer');
 
-        $app = new Application();
-
-        $service = new TransformerService($request, $app);
+        $service = new TransformerService($request, new Application());
 
         $data = array('foo' => 'baz');
 

@@ -17,7 +17,7 @@ class RequestFilterServiceTest extends \PHPUnit_Framework_TestCase
         $app = $this->getMockApplication();
 
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request', array());
-        //$request->attributes->set('filter', 'MJanssen\Fixtures\Filter\TestFilterLoader');
+        //$request->attributes->set('filter', 'MJanssen\Assets\Filter\TestFilterLoader');
     }
 
     /**
