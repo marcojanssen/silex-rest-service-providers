@@ -6,14 +6,16 @@ use Silex\Application;
 interface TransformerInterface
 {
     /**
+     * @param Application $app
      * @param array $data
-     * @return mixed
+     * @return array
      */
-    public function transformHydrateData($data, Application $app);
+    public function transformHydrateData(Application $app, array $data);
 
     /**
+     * @param Application $app
      * @param array $data
-     * @return mixed
+     * @return array
      */
-    public function transformExtractData($data, Application $app);
+    public function transformExtractData(Application $app, array $data);
 } 
