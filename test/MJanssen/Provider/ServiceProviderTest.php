@@ -21,7 +21,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($app['doctrine.extractor']));
         $this->assertTrue(isset($app['doctrine.hydrator']));
         $this->assertTrue(isset($app['doctrine.resolver']));
-        $this->assertTrue(isset($app['service.validator']));
         $this->assertTrue(isset($app['service.transformer']));
         $this->assertFalse(isset($app['foo']));
     }

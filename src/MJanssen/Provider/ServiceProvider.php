@@ -95,10 +95,6 @@ class ServiceProvider implements ServiceProviderInterface
             return new RequestFilterService($app['request']);
         });
 
-        $app['service.validator'] = $app->share(function($app) {
-            return new ValidatorService($app['service.validator'], $app['request']);
-        });
-
         $app['service.rest.entity'] = $app->share(function($app) {
             return new RestEntityService($app['request'], $app);
         });

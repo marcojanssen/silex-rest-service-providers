@@ -2,6 +2,7 @@
 namespace MJanssen\Service;
 
 use Silex\Application;
+use Silex\Provider\ValidatorServiceProvider;
 use MJanssen\Assets\Entity\Test;
 
 class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
@@ -114,6 +115,8 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
 
+
+
         $em = $this->getMock('\Doctrine\ORM\EntityManager', array('getRepository', 'persist', 'flush', 'remove', 'merge'), array(), '', false);
 
         $em->expects($this->any())
@@ -125,7 +128,7 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
         $app['doctrine.resolver'] = $this->getResolverServiceMock();
         $app['doctrine.extractor'] = $this->getExtractorServiceMock();
         $app['doctrine.hydrator'] = $this->getHydratorServiceMock();
-        $app['service.validator'] = $this->getValidatorServiceMock();
+        $app['validator'] = $this->getMock('Symfony\Component\Validator\Validator', array(), array(), '', false);
         $app['service.request.filter'] = $this->getRequestFilterServiceMock();
 
         return $app;
@@ -200,20 +203,6 @@ class RestEntityServiceTest extends \PHPUnit_Framework_TestCase
         $service->expects($this->any())
                 ->method('extractEntities')
                 ->will($this->returnValue(array($this->getOutput, $this->getOutput)));
-
-        return $service;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getValidatorServiceMock()
-    {
-        $service = $this->getMock('MJanssen\Service\ValidatorService', array('validateRequest'), array(), '', false);
-
-        $service->expects($this->any())
-                ->method('validateRequest')
-                ->will($this->returnValue(null));
 
         return $service;
     }

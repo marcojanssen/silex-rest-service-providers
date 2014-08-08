@@ -100,15 +100,15 @@ class RestEntityService
      */
     public function postAction()
     {
-        $response = $this->app['service.validator']->validateRequest();
-        if(null !== $response) {
-            return $response;
-        }
-
         $entity = $this->app['doctrine.hydrator']->hydrateEntity(
             $this->request->getContent(),
             $this->getEntityName()
         );
+
+        $response = $this->app['validator']->validate($entity);
+        if(null !== $response) {
+            return $response;
+        }
 
         $this->app['orm.em']->persist($entity);
         $this->app['orm.em']->flush();
@@ -125,11 +125,6 @@ class RestEntityService
      */
     public function putAction($identifier)
     {
-        $response = $this->app['service.validator']->validateRequest();
-        if(null !== $response) {
-            return $response;
-        }
-
         $entity = $this->getEntityFromRepository($identifier);
         $this->isValidEntity($entity, $identifier);
 
@@ -137,6 +132,11 @@ class RestEntityService
             $this->request->getContent(),
             $this->getEntityName()
         );
+
+        $response = $this->app['validator']->validate($updatedEntity);
+        if(null !== $response) {
+            return $response;
+        }
 
         $this->app['orm.em']->merge($updatedEntity);
         $this->app['orm.em']->flush();
