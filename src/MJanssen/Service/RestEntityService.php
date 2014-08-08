@@ -100,7 +100,7 @@ class RestEntityService
      */
     public function postAction()
     {
-        $response = $this->app['service.request.validator']->validateRequest();
+        $response = $this->app['service.validator']->validateRequest();
         if(null !== $response) {
             return $response;
         }
@@ -125,7 +125,7 @@ class RestEntityService
      */
     public function putAction($identifier)
     {
-        $response = $this->app['service.request.validator']->validateRequest();
+        $response = $this->app['service.validator']->validateRequest();
         if(null !== $response) {
             return $response;
         }
