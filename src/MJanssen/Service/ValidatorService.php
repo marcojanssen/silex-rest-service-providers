@@ -1,121 +1,50 @@
 <?php
 namespace MJanssen\Service;
 
-use Symfony\Component\Validator\Validator;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\HttpFoundation\Request;
 
 class ValidatorService
 {
-    protected $errors = array();
-
     /**
-     * @var \Symfony\Component\Validator\Validator
+     * @var Validator
      */
     protected $validator;
 
-    protected $validatorClass;
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * @param Validator $validator
+     * @param Request $request
      */
-    public function __construct(Validator $validator)
+    public function __construct()
     {
-        $this->validator = $validator;
     }
 
     /**
-     * @param $validatorClassName
+     * Validates incoming request
      */
-    public function setValidatorConstrainClass($validatorClassName)
+    public function validateRequest()
     {
-        try {
-            $this->validatorClass = new $validatorClassName;
-        } catch (Exception $e) {
+        $this->validator->setValidatorConstrainClass($this->request->attributes->get('validator'));
 
-        }
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValidatorConstrainClass()
-    {
-        return $this->validatorClass;
-    }
-
-    /**
-     * Validates incoming data
-     *
-     * @param $validatorName
-     * @param $data
-     */
-    public function validate($data)
-    {
-        if($this->isJson($data)) {
-            $data = json_decode($data, true);
-        }
-
-        if(!is_object($this->getValidatorConstrainClass())) {
-            throw new \RuntimeException('No valid validator class set');
-        }
-
-        $this->setErrors(
-            $this->validator->validateValue(
-                $data,
-                $this->getValidatorConstrainClass()->getConstraints()
-            )
+        $this->validator->validate(
+            $this->request->getContent()
         );
-    }
 
-    /**
-     * Check if errors exist
-     * @return bool
-     */
-    public function hasErrors()
-    {
-        if (count($this->errors) > 0) {
-            return true;
-        }
-        return false;
-    }
+        if($this->validator->hasErrors()) {
+            $errors = $this->validator->getErrors();
 
-    /**
-     * Returns the errors
-     *
-     * @return array
-     */
-    public function getErrors()
-    {
-        if ($this->hasErrors()) {
-            return $this->errors;
-        } else {
-            return;
-        }
-    }
+            $errorFormatted = array();
+            foreach($errors as $error) {
+                $errorFormatted[$error->getPropertyPath()][] = $error->getMessage();
+            }
 
-    /**
-     * @param array $errors
-     *
-     * @throws \Exception
-     */
-    public function setErrors(ConstraintViolationList $errors)
-    {
-        $this->errors = $errors;
-    }
-
-    /**
-     * Check if incoming data is JSON
-     * @param $string
-     * @return bool
-     */
-    protected function isJson($string)
-    {
-        if(!is_string($string)) {
-            return false;
+            return array('errors' => $errorFormatted);
         }
 
-        json_decode($string);
-        return (json_last_error() == JSON_ERROR_NONE);
+        return null;
     }
-
 }

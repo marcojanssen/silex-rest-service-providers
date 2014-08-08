@@ -9,7 +9,6 @@ use MJanssen\Filters\PropertyFilter;
 use MJanssen\Service\ExtractorService;
 use MJanssen\Service\HydratorService;
 use MJanssen\Service\RequestFilterService;
-use MJanssen\Service\RequestValidatorService;
 use MJanssen\Service\ResolverService;
 use MJanssen\Service\RestEntityService;
 use MJanssen\Service\TransformerService;
@@ -93,16 +92,12 @@ class ServiceProvider implements ServiceProviderInterface
             return new ResolverService($app['orm.em']);
         });
 
-        $app['service.validator'] = $app->share(function($app) {
-            return new ValidatorService($app['validator']);
-        });
-
         $app['service.request.filter'] = $app->share(function($app) {
             return new RequestFilterService($app['request']);
         });
 
-        $app['service.request.validator'] = $app->share(function($app) {
-            return new RequestValidatorService($app['service.validator'], $app['request']);
+        $app['service.validator'] = $app->share(function($app) {
+            return new ValidatorService($app['service.validator'], $app['request']);
         });
 
         $app['service.rest.entity'] = $app->share(function($app) {

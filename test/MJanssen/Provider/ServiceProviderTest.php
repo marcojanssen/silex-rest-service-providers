@@ -23,7 +23,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($app['doctrine.resolver']));
         $this->assertTrue(isset($app['service.validator']));
         $this->assertTrue(isset($app['service.transformer']));
-        $this->assertTrue(isset($app['service.request.validator']));
         $this->assertFalse(isset($app['foo']));
     }
 
@@ -133,31 +132,10 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
     /**
      * Test if validator service can be instantiated
      */
-    public function testValidatorServiceService()
+    public function testValidatorService()
     {
-        $app = $this->getMockApplication();
-
-        $app->register(
-            new ValidatorServiceProvider
-        );
-
-        $this->assertInstanceOf('MJanssen\Service\ValidatorService', $app['service.validator']);
-    }
-
-    /**
-     * Test if validator request service can be instantiated
-     */
-    public function testRequestValidatorService()
-    {
-        $app = $this->getMockApplication();
-
-        $app->register(
-            new ValidatorServiceProvider
-        );
-
-        $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
-
-        $this->assertInstanceOf('MJanssen\Service\RequestValidatorService', $app['service.request.validator']);
+        //$app = $this->getMockApplication();
+        //$this->assertInstanceOf('MJanssen\Service\ValidatorService', $app['service.validator']);
     }
 
     /**
