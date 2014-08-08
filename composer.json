@@ -1,6 +1,6 @@
 {
     "name": "marcojanssen/silex-rest-service-providers",
-    "description": "Package containing several services for silex/rest skeleton",
+    "description": "Package containing several services for marcojanssen/silex-rest skeleton",
     "keywords": ["silex", "rest", "api", "provider"],
     "license": "MIT",
     "authors": [
@@ -16,7 +16,7 @@
         "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.0.*",
         "jms/serializer": "0.16.0",
         "jurjean/spray-persistence-bundle": "2.*",
-        "silex/silex": "1.1.*",
+        "silex/silex": "~1.2",
         "symfony/finder": "~2.3",
         "symfony/process": "~2.3",
         "symfony/property-access": "~2.3",
@@ -29,7 +29,7 @@
         "phpunit/phpunit": "3.7.*"
     },
     "suggest": {
-        "silex/rest": "This package is implemented by silex/rest"
+        "marcojanssen/silex-rest": "This package is implemented by marcojanssen/silex-rest"
     },
     "autoload": {
         "psr-0": {
