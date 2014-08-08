@@ -5,7 +5,6 @@ use JMS\Serializer\Construction\DoctrineObjectConstructor;
 use JMS\Serializer\Construction\UnserializeObjectConstructor;
 use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\SerializerBuilder;
-use MJanssen\Filters\PropertyFilter;
 use MJanssen\Service\ExtractorService;
 use MJanssen\Service\HydratorService;
 use MJanssen\Service\RequestFilterService;

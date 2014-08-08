@@ -10,7 +10,7 @@ use Symfony\Component\PropertyAccess\StringUtil;
 class ResolverService
 {
     /**
-     * @var EntityManagerInterface
+     * @var \Doctrine\ORM\EntityManager
      */
     private $entityManager;
 

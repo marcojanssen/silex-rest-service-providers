@@ -5,20 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ValidatorService
 {
-    /**
-     * @var Validator
-     */
-    protected $validator;
 
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * @param Validator $validator
-     * @param Request $request
-     */
     public function __construct()
     {
     }

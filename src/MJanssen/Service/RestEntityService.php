@@ -1,17 +1,19 @@
 <?php
 namespace MJanssen\Service;
 
-use MJanssen\Filters\FilterLoader;
 use Silex\Application;
-use Spray\PersistenceBundle\EntityFilter\Common\Ascending;
-use Spray\PersistenceBundle\Repository\RepositoryFilter;
-use Spray\PersistenceBundle\Repository\RepositoryFilterInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class RestEntityService
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     protected $request;
+
+    /**
+     * @var \Silex\Application
+     */
     protected $app;
     
     /**

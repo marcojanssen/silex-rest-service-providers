@@ -6,11 +6,19 @@ use JMS\Serializer\SerializationContext;
 
 class ExtractorService
 {
+    /**
+     * @var \JMS\Serializer\Serializer
+     */
     protected $serializer;
+
+    /**
+     * @var TransformerService
+     */
     protected $transformer;
 
     /**
      * @param Serializer $serializer
+     * @param TransformerService $transformer
      */
     public function __construct(Serializer $serializer, TransformerService $transformer)
     {
@@ -20,6 +28,7 @@ class ExtractorService
 
     /**
      * @param $entities
+     * @param $group
      * @return array
      */
     public function extractEntities($entities, $group)
@@ -36,7 +45,8 @@ class ExtractorService
 
     /**
      * @param $entity
-     * @return array
+     * @param $group
+     * @return mixed
      */
     public function extractEntity($entity, $group)
     {
