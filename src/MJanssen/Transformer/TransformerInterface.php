@@ -7,15 +7,15 @@ interface TransformerInterface
 {
     /**
      * @param Application $app
-     * @param array $data
+     * @param $data
      * @return array
      */
-    public function transformHydrateData(Application $app, array $data);
+    public function transformHydrateData(Application $app, $data);
 
     /**
      * @param Application $app
-     * @param array $data
+     * @param $data
      * @return array
      */
-    public function transformExtractData(Application $app, array $data);
+    public function transformExtractData(Application $app, $data);
 } 
