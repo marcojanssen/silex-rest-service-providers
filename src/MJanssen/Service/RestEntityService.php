@@ -110,7 +110,7 @@ class RestEntityService
 
         $response = $this->app['validator']->validate($entity);
         if(null !== $response) {
-            return $response;
+            return $this->formatErrors($response);
         }
 
         $this->app['orm.em']->persist($entity);
@@ -138,7 +138,7 @@ class RestEntityService
 
         $response = $this->app['validator']->validate($updatedEntity);
         if(null !== $response) {
-            return $response;
+            return $this->formatErrors($response);
         }
 
         $this->app['orm.em']->merge($updatedEntity);
@@ -215,5 +215,17 @@ class RestEntityService
         $this->fieldNameIdentifier = $fieldNameIdentifier;
     }
 
+    /**
+     * @param $errors
+     * @return array
+     */
+    protected function formatErrors($errors)
+    {
+        $errorFormatted = array();
+        foreach($errors as $error) {
+            $errorFormatted[$error->getPropertyPath()][] = $error->getMessage();
+        }
 
+        return array('errors' => $errorFormatted);
+    }
 }
