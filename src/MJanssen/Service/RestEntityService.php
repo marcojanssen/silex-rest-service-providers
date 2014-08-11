@@ -109,7 +109,7 @@ class RestEntityService
         );
 
         $response = $this->app['validator']->validate($entity);
-        if(null !== $response) {
+        if(count($response) > 0) {
             return $this->formatErrors($response);
         }
 
@@ -122,7 +122,7 @@ class RestEntityService
         );
     }
 
-    /**
+    /** 
      * @param $identifier
      * @return array
      */
@@ -137,7 +137,7 @@ class RestEntityService
         );
 
         $response = $this->app['validator']->validate($updatedEntity);
-        if(null !== $response) {
+        if(count($response) > 0) {
             return $this->formatErrors($response);
         }
 
