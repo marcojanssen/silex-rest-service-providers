@@ -4,6 +4,9 @@ namespace MJanssen\Service;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated since 1.0, will be replaced by a event driven setup
+ */
 class RestEntityService
 {
     /**
