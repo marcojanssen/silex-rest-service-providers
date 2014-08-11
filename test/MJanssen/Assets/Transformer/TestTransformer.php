@@ -11,7 +11,7 @@ class TestTransformer implements TransformerInterface
      * @param array $data
      * @return array
      */
-    public function transformHydrateData(Application $app, array $data)
+    public function transformHydrateData(Application $app, $data)
     {
         return $data;
     }
@@ -21,7 +21,7 @@ class TestTransformer implements TransformerInterface
      * @param array $data
      * @return array
      */
-    public function transformExtractData(Application $app, array $data)
+    public function transformExtractData(Application $app, $data)
     {
         return $data;
     }
