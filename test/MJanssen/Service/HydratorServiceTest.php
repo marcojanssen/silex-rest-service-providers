@@ -17,9 +17,12 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
         $serializer = SerializerBuilder::create()->build();
         $service    = new HydratorService($serializer, $this->getTransformer());
 
-        $result = $service->hydrateEntity(json_encode($this->testData), 'MJanssen\Assets\Entity\Test');
+        $result = $service->hydrateEntity($this->testData, 'MJanssen\Assets\Entity\Test');
 
-        $this->assertEquals($this->createEntity($this->testData), $result);
+        $this->assertEquals(
+            $this->createEntity($this->testData),
+            $result
+        );
     }
 
     /**
@@ -31,7 +34,7 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
 
         $transformer->expects($this->any())
             ->method('transformHydrateData')
-            ->will($this->returnValue(json_encode($this->testData)));
+            ->will($this->returnValue($this->testData));
 
         return $transformer;
     }

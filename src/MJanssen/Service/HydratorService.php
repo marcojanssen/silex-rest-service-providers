@@ -32,8 +32,11 @@ class HydratorService
      */
     public function hydrateEntity($data, $entityName)
     {
+        if(is_string($data)) {
+            $data = json_decode($data, true);
+        }
         return $this->serializer->deserialize(
-            $this->transformer->transformHydrateData($data),
+            json_encode($this->transformer->transformHydrateData($data)),
             $entityName,
             'json'
         );

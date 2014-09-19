@@ -35,5 +35,10 @@
         "psr-0": {
             "MJanssen\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "MJanssen\\": "test/"
+        }
     }
 }
