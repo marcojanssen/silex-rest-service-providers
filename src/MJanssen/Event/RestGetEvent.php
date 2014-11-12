@@ -2,7 +2,7 @@
 namespace MJanssen\Event;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\EventDispatcher\Event;
 
 class RestGetEvent extends Event
@@ -81,9 +81,9 @@ class RestGetEvent extends Event
     }
 
     /**
-     * @param EntityRepository $repository
+     * @param ObjectRepository $repository
      */
-    public function setRepository(EntityRepository $repository)
+    public function setRepository(ObjectRepository $repository)
     {
         $this->repository = $repository;
     }
