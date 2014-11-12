@@ -14,7 +14,7 @@ class EntityServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             'MJanssen\Assets\Entity\Test',
-            $service->getEntity(
+            $service->get(
                 'MJanssen\Assets\Entity\Test',
                 1
             )

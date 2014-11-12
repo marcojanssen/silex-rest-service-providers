@@ -17,7 +17,7 @@ class EntityService
      * @param $identifier
      * @return null|object
      */
-    public function getEntity($identifier)
+    public function get($identifier)
     {
         return $this->entityRepository->find($identifier);
     }
