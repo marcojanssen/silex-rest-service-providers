@@ -27,6 +27,38 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Object name is not set
+     */
+    public function testExceptionIfObjectNameIsNotSet()
+    {
+        $event = new RestGetEvent();
+
+        $event->setObjectManager(
+            $this->getObjectManagerMock()
+        );
+
+        $listener = new ObjectManagerListener();
+        $listener->setRepository($event);
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Object manager is not set
+     */
+    public function testExceptionIfObjectManagerIsNotSet()
+    {
+        $event = new RestGetEvent();
+
+        $event->setObjectName(
+            'MJanssen\Assets\Entity\Test'
+        );
+
+        $listener = new ObjectManagerListener();
+        $listener->setRepository($event);
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getObjectManagerMock()

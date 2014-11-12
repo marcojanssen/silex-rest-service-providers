@@ -3,6 +3,7 @@ namespace MJanssen\Event;
 
 use MJanssen\Service\ObjectManagerService;
 use Symfony\Component\EventDispatcher\Event;
+use Zend\Loader\Exception\RuntimeException;
 
 class ObjectManagerListener
 {
@@ -11,6 +12,14 @@ class ObjectManagerListener
      */
     public function setRepository(Event $event)
     {
+        if(null === $event->getObjectName()) {
+            throw new RuntimeException('Object name is not set');
+        }
+
+        if(null === $event->getObjectManager()) {
+            throw new RuntimeException('Object manager is not set');
+        }
+
         $objectManagerService = new ObjectManagerService(
             $event->getObjectManager()
         );
