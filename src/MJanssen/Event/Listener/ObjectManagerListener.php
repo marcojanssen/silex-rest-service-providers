@@ -31,4 +31,42 @@ class ObjectManagerListener
             )
         );
     }
+
+    /**
+     * @param Event $event
+     */
+    public function flush(Event $event)
+    {
+        $event->getObjectManager()->flush();
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function merge(Event $event)
+    {
+        $event->getObjectManager()->merge(
+            $event->getObject()
+        );
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function persist(Event $event)
+    {
+        $event->getObjectManager()->persist(
+            $event->getObject()
+        );
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function remove(Event $event)
+    {
+        $event->getObjectManager()->remove(
+            $event->getObject()
+        );
+    }
 } 

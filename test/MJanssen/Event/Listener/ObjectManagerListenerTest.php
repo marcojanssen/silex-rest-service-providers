@@ -6,25 +6,89 @@ use PHPUnit_Framework_TestCase;
 
 class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
 {
-    public function testObjectRepositoryIsSetInEvent()
+    public function setUp()
     {
-        $event = new GetEvent();
+        $this->event = new GetEvent();
 
-        $event->setObjectManager(
+        $this->event->setObjectManager(
             $this->getObjectManagerMock()
         );
 
-        $event->setObjectName(
-            'MJanssen\Assets\Entity\Test'
-        );
+        $this->event->setObjectName('MJanssen\Assets\Entity\Test');
 
-        $listener = new ObjectManagerListener();
-        $listener->setObjectRepository($event);
+        $this->listener = new ObjectManagerListener();
+
+    }
+
+
+    public function testObjectRepositoryIsSetInEvent()
+    {
+        $this->listener->setObjectRepository($this->event);
 
         $this->assertInstanceOf(
             '\Doctrine\Common\Persistence\ObjectRepository',
-            $event->getObjectRepository()
+            $this->event->getObjectRepository()
         );
+    }
+
+    public function testFlush()
+    {
+        $objectManager = $this->getObjectManagerMock();
+
+        $this->setSingleMethodExpectation(
+            $objectManager,
+            'flush'
+        );
+
+        $this->event->setObjectManager($objectManager);
+
+        $this->listener->flush($this->event);
+    }
+
+    public function testMerge()
+    {
+        $objectManager = $this->getObjectManagerMock();
+
+        $this->setSingleMethodExpectation(
+            $objectManager,
+            'merge'
+        );
+
+        $this->event->setObjectManager($objectManager);
+
+
+        $this->listener->merge($this->event);
+    }
+
+    public function testPersist()
+    {
+        $objectManager = $this->getObjectManagerMock();
+
+        $this->setSingleMethodExpectation(
+            $objectManager,
+            'persist'
+        );
+
+        $this->event->setObjectManager($objectManager);
+
+
+
+        $this->listener->persist($this->event);
+    }
+
+    public function testRemove()
+    {
+        $objectManager = $this->getObjectManagerMock();
+
+        $this->setSingleMethodExpectation(
+            $objectManager,
+            'remove'
+        );
+
+        $this->event->setObjectManager($objectManager);
+
+
+        $this->listener->remove($this->event);
     }
 
     /**
@@ -33,14 +97,8 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionIfObjectNameIsNotSet()
     {
-        $event = new GetEvent();
-
-        $event->setObjectManager(
-            $this->getObjectManagerMock()
-        );
-
-        $listener = new ObjectManagerListener();
-        $listener->setObjectRepository($event);
+        $this->event->setObjectName(null);
+        $this->listener->setObjectRepository($this->event);
     }
 
     /**
@@ -55,9 +113,10 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
             'MJanssen\Assets\Entity\Test'
         );
 
-        $listener = new ObjectManagerListener();
-        $listener->setObjectRepository($event);
+        $this->listener->setObjectRepository($event);
     }
+
+
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
@@ -66,7 +125,7 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
     {
         $objectManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                               ->disableOriginalConstructor()
-                              ->setMethods(array('getRepository'))
+                              ->setMethods(array('getRepository', 'flush', 'persist', 'merge', 'remove'))
                               ->getMockForAbstractClass();
 
         $objectManager->expects($this->any())
@@ -81,11 +140,22 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
+    protected function setSingleMethodExpectation($mock, $methodName, $value = null)
+    {
+        $mock->expects($this->once())
+             ->method($methodName)
+             ->will($this->returnValue($value));
+
+        return $mock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getRepositoryMock()
     {
         return $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                     ->disableOriginalConstructor()
                     ->getMock();
     }
-
 } 
