@@ -36,6 +36,20 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSetObjectManager()
+    {
+        $repository = $this->getRepositoryMock();
+
+        $this->event->setRepository(
+            $repository
+        );
+
+        $this->assertSame(
+            $repository,
+            $this->event->getRepository()
+        );
+    }
+
     public function testSetRepository()
     {
         $repository = $this->getRepositoryMock();
@@ -70,6 +84,16 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         return $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
                     ->disableOriginalConstructor()
                     ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getEntityManagerMock()
+    {
+        return $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
 } 

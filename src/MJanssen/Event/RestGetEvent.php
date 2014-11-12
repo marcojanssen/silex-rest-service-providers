@@ -1,6 +1,7 @@
 <?php
 namespace MJanssen\Event;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -15,6 +16,11 @@ class RestGetEvent extends Event
      * @var object
      */
     protected $entity;
+
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
 
     /**
      * @var EntityRepository
@@ -56,6 +62,22 @@ class RestGetEvent extends Event
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * @return ObjectManager
+     */
+    public function getObjectManager()
+    {
+        return $this->objectManager;
+    }
+
+    /**
+     * @param ObjectManager $objectManager
+     */
+    public function setObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
     }
 
     /**
