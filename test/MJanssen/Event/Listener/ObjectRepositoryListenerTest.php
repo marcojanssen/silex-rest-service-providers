@@ -26,6 +26,37 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
         );
     }
 
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Object identifier is not set
+     */
+    public function testExceptionIfObjectIdentifierIsNotSet()
+    {
+        $event = new RestGetEvent();
+
+        $event->setObjectRepository(
+            $this->getObjectRepositoryMock()
+        );
+
+        $listener = new ObjectRepositoryListener();
+        $listener->setObject($event);
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Object repository is not set
+     */
+    public function testExceptionIfObjectRepositoryIsNotSet()
+    {
+        $event = new RestGetEvent();
+
+        $event->setIdentifier(1);
+
+        $listener = new ObjectRepositoryListener();
+        $listener->setObject($event);
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
