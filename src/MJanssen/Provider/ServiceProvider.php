@@ -10,7 +10,6 @@ use MJanssen\Service\HydratorService;
 use MJanssen\Service\RequestFilterService;
 use MJanssen\Service\ResolverService;
 use MJanssen\Service\RestEntityService;
-use MJanssen\Service\TransformerService;
 use MJanssen\Service\ValidatorService;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -75,16 +74,12 @@ class ServiceProvider implements ServiceProviderInterface
             return $objectConstructor;
         });
 
-        $app['service.transformer'] = $app->share(function($app) {
-            return new TransformerService($app['request'], $app);
-        });
-
         $app['doctrine.extractor'] = $app->share(function($app) {
-            return new ExtractorService($app['serializer'], $app['service.transformer']);
+            return new ExtractorService($app['serializer']);
         });
 
         $app['doctrine.hydrator'] = $app->share(function($app) {
-            return new HydratorService($app['serializer'], $app['service.transformer']);
+            return new HydratorService($app['serializer']);
         });
 
         $app['doctrine.resolver'] = $app->share(function($app) {

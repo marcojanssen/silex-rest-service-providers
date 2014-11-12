@@ -12,18 +12,11 @@ class ExtractorService
     protected $serializer;
 
     /**
-     * @var TransformerService
-     */
-    protected $transformer;
-
-    /**
      * @param Serializer $serializer
-     * @param TransformerService $transformer
      */
-    public function __construct(Serializer $serializer, TransformerService $transformer)
+    public function __construct(Serializer $serializer)
     {
         $this->serializer = $serializer;
-        $this->transformer = $transformer;
     }
 
     /**
@@ -52,8 +45,7 @@ class ExtractorService
     {
         $serializedContext = SerializationContext::create()->setGroups(array($group))
                                                            ->setSerializeNull(true);
-        return $this->transformer->transformExtractData(
-            json_decode($this->serializer->serialize($entity, 'json', $serializedContext), true)
-        );
+
+        return json_decode($this->serializer->serialize($entity, 'json', $serializedContext), true);
     }
 }

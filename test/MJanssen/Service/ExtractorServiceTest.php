@@ -13,7 +13,7 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtractEntity()
     {
-        $service = new ExtractorService($this->getSerializer(), $this->getTransformer());
+        $service = new ExtractorService($this->getSerializer());
         $entity = $this->createEntity($this->testData);
         $result = $service->extractEntity($entity, 'foo');
 
@@ -25,7 +25,7 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtractEntities()
     {
-        $service = new ExtractorService($this->getSerializer(), $this->getTransformer());
+        $service = new ExtractorService($this->getSerializer());
 
         $data = array(
             $this->testData,
@@ -47,20 +47,6 @@ class ExtractorServiceTest extends \PHPUnit_Framework_TestCase
     protected function getSerializer()
     {
         return SerializerBuilder::create()->build();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getTransformer()
-    {
-        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformExtractData', 'getTransformer'), array(), '', false);
-
-        $transformer->expects($this->any())
-                    ->method('transformExtractData')
-                    ->will($this->returnValue($this->testData));
-
-        return $transformer;
     }
 
     /**

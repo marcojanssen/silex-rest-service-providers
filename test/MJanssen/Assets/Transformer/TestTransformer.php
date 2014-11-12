@@ -1,28 +1,18 @@
 <?php
 namespace MJanssen\Assets\Transformer;
 
-use Silex\Application;
 use MJanssen\Transformer\TransformerInterface;
 
 class TestTransformer implements TransformerInterface
 {
     /**
-     * @param Application $app
-     * @param array $data
-     * @return array
+     * @param $object
+     * @return object
      */
-    public function transformHydrateData(Application $app, $data)
+    public function transform($object)
     {
-        return $data;
-    }
+        $object->name = 'Transformed';
 
-    /**
-     * @param Application $app
-     * @param array $data
-     * @return array
-     */
-    public function transformExtractData(Application $app, $data)
-    {
-        return $data;
+        return $object;
     }
 }

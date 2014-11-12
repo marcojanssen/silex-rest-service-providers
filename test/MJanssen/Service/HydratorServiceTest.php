@@ -15,7 +15,7 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
     public function testHydrateEntity()
     {
         $serializer = SerializerBuilder::create()->build();
-        $service    = new HydratorService($serializer, $this->getTransformer());
+        $service    = new HydratorService($serializer);
 
         $result = $service->hydrateEntity($this->testData, 'MJanssen\Assets\Entity\Test');
 
@@ -23,20 +23,6 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
             $this->createEntity($this->testData),
             $result
         );
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function getTransformer()
-    {
-        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformHydrateData', 'getTransformer'), array(), '', false);
-
-        $transformer->expects($this->any())
-            ->method('transformHydrateData')
-            ->will($this->returnValue($this->testData));
-
-        return $transformer;
     }
 
     /**

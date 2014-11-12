@@ -21,7 +21,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($app['doctrine.extractor']));
         $this->assertTrue(isset($app['doctrine.hydrator']));
         $this->assertTrue(isset($app['doctrine.resolver']));
-        $this->assertTrue(isset($app['service.transformer']));
         $this->assertFalse(isset($app['foo']));
     }
 
@@ -64,18 +63,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
     /**
      * Test if extractor service can be instantiated
      */
-    public function testTransformerService()
-    {
-        $app = $this->getMockApplication();
-
-        $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
-
-        $this->assertInstanceOf('MJanssen\Service\TransformerService', $app['service.transformer']);
-    }
-
-    /**
-     * Test if extractor service can be instantiated
-     */
     public function testExtractorService()
     {
         $app = $this->getMockApplication();
@@ -85,7 +72,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         });
 
         $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $app['service.transformer'] = $this->getMock('MJanssen\Service\TransformerService', array(), array(), '', false);
 
         $this->assertInstanceOf('MJanssen\Service\ExtractorService', $app['doctrine.extractor']);
     }
@@ -102,7 +88,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         });
 
         $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $app['service.transformer'] = $this->getMock('MJanssen\Service\TransformerService', array(), array(), '', false);
 
         $this->assertInstanceOf('MJanssen\Service\HydratorService', $app['doctrine.hydrator']);
     }

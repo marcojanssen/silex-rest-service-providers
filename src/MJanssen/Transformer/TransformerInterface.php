@@ -6,16 +6,8 @@ use Silex\Application;
 interface TransformerInterface
 {
     /**
-     * @param Application $app
-     * @param $data
-     * @return array
+     * @param $object
+     * @return object
      */
-    public function transformHydrateData(Application $app, $data);
-
-    /**
-     * @param Application $app
-     * @param $data
-     * @return array
-     */
-    public function transformExtractData(Application $app, $data);
+    public function transform($object);
 } 

@@ -11,18 +11,11 @@ class HydratorService
     protected $serializer;
 
     /**
-     * @var TransformerService
-     */
-    protected $transformer;
-
-    /**
      * @param Serializer $serializer
-     * @param TransformerService $transformer
      */
-    public function __construct(Serializer $serializer, TransformerService $transformer)
+    public function __construct(Serializer $serializer)
     {
         $this->serializer = $serializer;
-        $this->transformer = $transformer;
     }
 
     /**
@@ -36,7 +29,7 @@ class HydratorService
             $data = json_decode($data, true);
         }
         return $this->serializer->deserialize(
-            json_encode($this->transformer->transformHydrateData($data)),
+            json_encode($data),
             $entityName,
             'json'
         );
