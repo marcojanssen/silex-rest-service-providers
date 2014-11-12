@@ -2,14 +2,14 @@
 namespace MJanssen\Event\Listener;
 
 use MJanssen\Assets\Entity\Test;
-use MJanssen\Event\RestGetEvent;
+use MJanssen\Event\GetEvent;
 use PHPUnit_Framework_TestCase;
 
 class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
 {
     public function testObjectSetInEvent()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
         $event->setObjectRepository(
             $this->getObjectRepositoryMock()
         );
@@ -28,7 +28,7 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
 
     public function testPropagationStoppedIfObjectNotFound()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setObjectRepository(
             $this->getObjectRepositoryMock(false)
@@ -51,7 +51,7 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionIfObjectIdentifierIsNotSet()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setObjectRepository(
             $this->getObjectRepositoryMock()
@@ -67,7 +67,7 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionIfObjectRepositoryIsNotSet()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setIdentifier(1);
 

@@ -4,12 +4,12 @@ namespace MJanssen\Event;
 use MJanssen\Assets\Entity\Test;
 use PHPUnit_Framework_TestCase;
 
-class RestGetEventTest extends PHPUnit_Framework_TestCase
+class GetEventTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()
     {
-        $this->event = new RestGetEvent();
+        $this->event = new GetEvent();
     }
 
     public function testSetObjectName()

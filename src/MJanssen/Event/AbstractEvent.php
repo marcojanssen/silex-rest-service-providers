@@ -5,7 +5,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\EventDispatcher\Event;
 
-class RestGetEvent extends Event
+abstract class AbstractEvent extends Event
 {
     /**
      * @var string
@@ -26,11 +26,6 @@ class RestGetEvent extends Event
      * @var ObjectRepository
      */
     protected $objectRepository;
-
-    /**
-     * @var integer
-     */
-    protected $identifier;
 
     /**
      * @return string
@@ -94,21 +89,5 @@ class RestGetEvent extends Event
     public function getObjectRepository()
     {
         return $this->objectRepository;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * @param int $identifier
-     */
-    public function setIdentifier($identifier)
-    {
-        $this->identifier = $identifier;
     }
 } 

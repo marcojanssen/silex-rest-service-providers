@@ -1,14 +1,14 @@
 <?php
 namespace MJanssen\Event\Listener;
 
-use MJanssen\Event\RestGetEvent;
+use MJanssen\Event\GetEvent;
 use PHPUnit_Framework_TestCase;
 
 class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
 {
     public function testObjectRepositoryIsSetInEvent()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setObjectManager(
             $this->getObjectManagerMock()
@@ -33,7 +33,7 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionIfObjectNameIsNotSet()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setObjectManager(
             $this->getObjectManagerMock()
@@ -49,7 +49,7 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionIfObjectManagerIsNotSet()
     {
-        $event = new RestGetEvent();
+        $event = new GetEvent();
 
         $event->setObjectName(
             'MJanssen\Assets\Entity\Test'
