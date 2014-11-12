@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
 {
-
     public function testObjectSetInEvent()
     {
         $event = new RestGetEvent();
@@ -23,6 +22,25 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'MJanssen\Assets\Entity\Test',
             $event->getObject()
+        );
+    }
+
+
+    public function testPropagationStoppedIfObjectNotFound()
+    {
+        $event = new RestGetEvent();
+
+        $event->setObjectRepository(
+            $this->getObjectRepositoryMock(false)
+        );
+
+        $event->setIdentifier(1);
+
+        $listener = new ObjectRepositoryListener();
+        $listener->setObject($event);
+
+        $this->assertTrue(
+            $event->isPropagationStopped()
         );
     }
 
@@ -60,18 +78,22 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getObjectRepositoryMock()
+    protected function getObjectRepositoryMock($resultFound = true)
     {
         $objectRepository = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                                  ->disableOriginalConstructor()
                                  ->setMethods(array('find'))
                                  ->getMockForAbstractClass();
 
+        if(true === $resultFound) {
+            $returnValue = new Test();
+        } else {
+            $returnValue = null;
+        }
+
         $objectRepository->expects($this->any())
                          ->method('find')
-                         ->will($this->returnValue(
-                              new Test()
-                         ));
+                         ->will($this->returnValue($returnValue));
 
         return $objectRepository;
     }

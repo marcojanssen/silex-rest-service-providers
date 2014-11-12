@@ -24,10 +24,18 @@ class ObjectRepositoryListener
             $event->getObjectRepository()
         );
 
-        $event->setObject(
-            $objectRepositoryService->find(
-                $event->getIdentifier()
-            )
+        $object = $objectRepositoryService->find(
+            $event->getIdentifier()
         );
+
+        if(null === $object) {
+            $event->stopPropagation();
+        } else {
+            $event->setObject(
+                $objectRepositoryService->find(
+                    $event->getIdentifier()
+                )
+            );
+        }
     }
 } 
