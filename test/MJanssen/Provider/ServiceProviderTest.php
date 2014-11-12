@@ -105,23 +105,6 @@ class ServiceProviderTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('MJanssen\Service\ResolverService', $app['doctrine.resolver']);
     }
 
-    public function testRestEntityServiceInstantiation()
-    {
-        $app = $this->getMockApplication();
-
-        $app['request'] = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $this->assertInstanceOf('MJanssen\Service\RestEntityService', $app['service.rest.entity']);
-    }
-
-    /**
-     * Test if validator service can be instantiated
-     */
-    public function testValidatorService()
-    {
-        //$app = $this->getMockApplication();
-        //$this->assertInstanceOf('MJanssen\Service\ValidatorService', $app['service.validator']);
-    }
-
     /**
      * Test if filter request service can be instantiated
      */

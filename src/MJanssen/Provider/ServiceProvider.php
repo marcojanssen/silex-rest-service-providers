@@ -89,9 +89,5 @@ class ServiceProvider implements ServiceProviderInterface
         $app['service.request.filter'] = $app->share(function($app) {
             return new RequestFilterService($app['request']);
         });
-
-        $app['service.rest.entity'] = $app->share(function($app) {
-            return new RestEntityService($app['request'], $app);
-        });
     }
 }
