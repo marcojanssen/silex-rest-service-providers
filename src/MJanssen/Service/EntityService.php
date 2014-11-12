@@ -6,6 +6,11 @@ use Doctrine\ORM\EntityRepository;
 class EntityService
 {
     /**
+     * @var EntityRepository
+     */
+    protected $entityRepository;
+
+    /**
      * @param EntityRepository $entityRepository
      */
     public function __construct(EntityRepository $entityRepository)
