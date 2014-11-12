@@ -1,6 +1,7 @@
 <?php
-namespace MJanssen\Event;
+namespace MJanssen\Event\Listener;
 
+use MJanssen\Event\RestGetEvent;
 use PHPUnit_Framework_TestCase;
 
 class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase

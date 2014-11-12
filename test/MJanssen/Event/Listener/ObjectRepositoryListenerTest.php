@@ -1,7 +1,8 @@
 <?php
-namespace MJanssen\Event;
+namespace MJanssen\Event\Listener;
 
 use MJanssen\Assets\Entity\Test;
+use MJanssen\Event\RestGetEvent;
 use PHPUnit_Framework_TestCase;
 
 class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase

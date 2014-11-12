@@ -1,5 +1,5 @@
 <?php
-namespace MJanssen\Event;
+namespace MJanssen\Event\Listener;
 
 use MJanssen\Service\ObjectManagerService;
 use Symfony\Component\EventDispatcher\Event;
