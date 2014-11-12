@@ -4,10 +4,10 @@ namespace MJanssen\Event;
 use MJanssen\Assets\Entity\Test;
 use PHPUnit_Framework_TestCase;
 
-class EntityListenerTest extends PHPUnit_Framework_TestCase
+class ObjectListenerTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testEntitySetInEvent()
+    public function testObjectSetInEvent()
     {
         $event = new RestGetEvent();
         $event->setRepository(
@@ -16,12 +16,12 @@ class EntityListenerTest extends PHPUnit_Framework_TestCase
 
         $event->setIdentifier(1);
 
-        $listener = new EntityListener();
-        $listener->get($event);
+        $listener = new ObjectListener();
+        $listener->setObject($event);
 
         $this->assertInstanceOf(
             'MJanssen\Assets\Entity\Test',
-            $event->getEntity()
+            $event->getObject()
         );
     }
 
@@ -30,10 +30,10 @@ class EntityListenerTest extends PHPUnit_Framework_TestCase
      */
     protected function getRepositoryMock()
     {
-        $repository = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
+        $repository = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                            ->disableOriginalConstructor()
                            ->setMethods(array('find'))
-                           ->getMock();
+                           ->getMockForAbstractClass();
 
         $repository->expects($this->any())
                    ->method('find')

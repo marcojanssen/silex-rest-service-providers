@@ -11,7 +11,7 @@ class ObjectRepositoryService
     protected $objectManager;
 
     /**
-     * @param ObjectManager $objectRepository
+     * @param ObjectManager $objectManager
      */
     public function __construct(ObjectManager $objectManager)
     {

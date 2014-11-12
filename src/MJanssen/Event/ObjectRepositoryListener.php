@@ -17,7 +17,7 @@ class ObjectRepositoryListener
 
         $event->setRepository(
             $entityRepositoryService->getRepository(
-                $event->getEntityName()
+                $event->getObjectName()
             )
         );
     }

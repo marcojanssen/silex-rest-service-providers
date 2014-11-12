@@ -13,7 +13,7 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
             $this->getObjectManagerMock()
         );
 
-        $event->setEntityName(
+        $event->setObjectName(
             'MJanssen\Assets\Entity\Test'
         );
 

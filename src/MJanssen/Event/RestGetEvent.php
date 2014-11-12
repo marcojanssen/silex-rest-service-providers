@@ -10,12 +10,12 @@ class RestGetEvent extends Event
     /**
      * @var string
      */
-    protected $entityName;
+    protected $objectName;
 
     /**
      * @var object
      */
-    protected $entity;
+    protected $object;
 
     /**
      * @var ObjectManager
@@ -23,9 +23,9 @@ class RestGetEvent extends Event
     protected $objectManager;
 
     /**
-     * @var EntityRepository
+     * @var ObjectRepository
      */
-    protected $repository;
+    protected $objectRepository;
 
     /**
      * @var integer
@@ -35,33 +35,33 @@ class RestGetEvent extends Event
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getObjectName()
     {
-        return $this->entityName;
+        return $this->objectName;
     }
 
     /**
-     * @param string $entityName
+     * @param string $objectName
      */
-    public function setEntityName($entityName)
+    public function setObjectName($objectName)
     {
-        $this->entityName = $entityName;
+        $this->objectName = $objectName;
     }
 
     /**
-     * @param $entity
+     * @param $object
      */
-    public function setEntity($entity)
+    public function setObject($object)
     {
-        $this->entity = $entity;
+        $this->object = $object;
     }
 
     /**
      * @return mixed
      */
-    public function getEntity()
+    public function getObject()
     {
-        return $this->entity;
+        return $this->object;
     }
 
     /**
@@ -83,17 +83,17 @@ class RestGetEvent extends Event
     /**
      * @param ObjectRepository $repository
      */
-    public function setRepository(ObjectRepository $repository)
+    public function setRepository(ObjectRepository $objectRepository)
     {
-        $this->repository = $repository;
+        $this->objectRepository = $objectRepository;
     }
 
     /**
-     * @return EntityRepository
+     * @return ObjectRepository
      */
     public function getRepository()
     {
-        return $this->repository;
+        return $this->objectRepository;
     }
 
     /**
@@ -111,5 +111,4 @@ class RestGetEvent extends Event
     {
         $this->identifier = $identifier;
     }
-
 } 

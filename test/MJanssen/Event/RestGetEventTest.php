@@ -12,47 +12,47 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         $this->event = new RestGetEvent();
     }
 
-    public function testSetEntityName()
+    public function testSetObjectName()
     {
         $testName = 'MJanssen\Assets\Entity\Test';
 
-        $this->event->setEntityName($testName);
+        $this->event->setObjectName($testName);
 
         $this->assertSame(
             $testName,
-            $this->event->getEntityName()
+            $this->event->getObjectName()
         );
     }
 
-    public function testSetEntity()
+    public function testSetObject()
     {
         $testEntity = new Test();
 
-        $this->event->setEntity($testEntity);
+        $this->event->setObject($testEntity);
 
         $this->assertSame(
             $testEntity,
-            $this->event->getEntity()
+            $this->event->getObject()
         );
     }
 
     public function testSetObjectManager()
     {
-        $repository = $this->getRepositoryMock();
+        $repository = $this->getObjectManagerMock();
 
-        $this->event->setRepository(
+        $this->event->setObjectManager(
             $repository
         );
 
         $this->assertSame(
             $repository,
-            $this->event->getRepository()
+            $this->event->getObjectManager()
         );
     }
 
     public function testSetRepository()
     {
-        $repository = $this->getRepositoryMock();
+        $repository = $this->getObjectRepositoryMock();
 
         $this->event->setRepository(
             $repository
@@ -79,21 +79,21 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getRepositoryMock()
+    protected function getObjectRepositoryMock()
     {
-        return $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
+        return $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                     ->disableOriginalConstructor()
-                    ->getMock();
+                    ->getMockForAbstractClass();
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getEntityManagerMock()
+    protected function getObjectManagerMock()
     {
-        return $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
+                    ->disableOriginalConstructor()
+                    ->getMockForAbstractClass();
     }
 
 } 
