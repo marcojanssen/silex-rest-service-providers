@@ -17,6 +17,27 @@ class RestGetEvent extends Event
     protected $repository;
 
     /**
+     * @var integer
+     */
+    protected $identifier;
+
+    /**
+     * @return int
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param int $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
      * @param $entity
      */
     public function setEntity($entity)

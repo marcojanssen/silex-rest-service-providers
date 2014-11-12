@@ -38,6 +38,18 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSetIdentifier()
+    {
+        $identifier = 1;
+
+        $this->event->setIdentifier($identifier);
+
+        $this->assertSame(
+            $identifier,
+            $this->event->getIdentifier()
+        );
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
