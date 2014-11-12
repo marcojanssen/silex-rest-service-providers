@@ -14,7 +14,7 @@ class ObjectManagerServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\Doctrine\Common\Persistence\ObjectRepository',
-            $service->getRepository('MJanssen\Assets\Entity\Test')
+            $service->getObjectRepository('MJanssen\Assets\Entity\Test')
         );
     }
 
@@ -23,18 +23,18 @@ class ObjectManagerServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function getObjectManagerMock()
     {
-        $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
+        $objectManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                               ->disableOriginalConstructor()
                               ->setMethods(array('getRepository'))
                               ->getMockForAbstractClass();
 
-        $entityManager->expects($this->any())
+        $objectManager->expects($this->any())
                       ->method('getRepository')
                       ->will($this->returnValue(
                           $this->getObjectRepositoryMock()
                       ));
 
-        return $entityManager;
+        return $objectManager;
     }
 
     /**

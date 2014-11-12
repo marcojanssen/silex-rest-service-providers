@@ -4,12 +4,12 @@ namespace MJanssen\Service;
 use MJanssen\Assets\Entity\Test;
 use PHPUnit_Framework_TestCase;
 
-class ObjectServiceTest extends PHPUnit_Framework_TestCase
+class ObjectRepositoryServiceTest extends PHPUnit_Framework_TestCase
 {
     public function testGetObject()
     {
-        $service = new ObjectService(
-            $this->getRepositoryMock()
+        $service = new ObjectRepositoryService(
+            $this->getObjectRepositoryMock()
         );
 
         $this->assertInstanceOf(
@@ -24,19 +24,19 @@ class ObjectServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getRepositoryMock()
+    protected function getObjectRepositoryMock()
     {
-        $repository = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
+        $objectRepository = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                            ->disableOriginalConstructor()
                            ->setMethods(array('find'))
                            ->getMockForAbstractClass();
 
-        $repository->expects($this->any())
-                   ->method('find')
-                   ->will($this->returnValue(
-                      new Test()
-                   ));
+        $objectRepository->expects($this->any())
+                         ->method('find')
+                         ->will($this->returnValue(
+                              new Test()
+                         ));
 
-        return $repository;
+        return $objectRepository;
     }
 } 

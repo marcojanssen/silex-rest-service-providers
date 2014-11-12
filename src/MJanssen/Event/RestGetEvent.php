@@ -83,7 +83,7 @@ class RestGetEvent extends Event
     /**
      * @param ObjectRepository $repository
      */
-    public function setRepository(ObjectRepository $objectRepository)
+    public function setObjectRepository(ObjectRepository $objectRepository)
     {
         $this->objectRepository = $objectRepository;
     }
@@ -91,7 +91,7 @@ class RestGetEvent extends Event
     /**
      * @return ObjectRepository
      */
-    public function getRepository()
+    public function getObjectRepository()
     {
         return $this->objectRepository;
     }

@@ -18,11 +18,11 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
         );
 
         $listener = new ObjectManagerListener();
-        $listener->setRepository($event);
+        $listener->setObjectRepository($event);
 
         $this->assertInstanceOf(
             '\Doctrine\Common\Persistence\ObjectRepository',
-            $event->getRepository()
+            $event->getObjectRepository()
         );
     }
 
@@ -39,7 +39,7 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
         );
 
         $listener = new ObjectManagerListener();
-        $listener->setRepository($event);
+        $listener->setObjectRepository($event);
     }
 
     /**
@@ -55,7 +55,7 @@ class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
         );
 
         $listener = new ObjectManagerListener();
-        $listener->setRepository($event);
+        $listener->setObjectRepository($event);
     }
 
     /**

@@ -3,7 +3,7 @@ namespace MJanssen\Service;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 
-class ObjectService
+class ObjectRepositoryService
 {
     /**
      * @var ObjectRepository

@@ -10,7 +10,7 @@ class ObjectManagerListener
     /**
      * @param Event $event
      */
-    public function setRepository(Event $event)
+    public function setObjectRepository(Event $event)
     {
         if(null === $event->getObjectName()) {
             throw new RuntimeException('Object name is not set');
@@ -24,8 +24,8 @@ class ObjectManagerListener
             $event->getObjectManager()
         );
 
-        $event->setRepository(
-            $objectManagerService->getRepository(
+        $event->setObjectRepository(
+            $objectManagerService->getObjectRepository(
                 $event->getObjectName()
             )
         );

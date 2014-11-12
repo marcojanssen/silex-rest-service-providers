@@ -50,17 +50,17 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSetRepository()
+    public function testSetObjectRepository()
     {
         $repository = $this->getObjectRepositoryMock();
 
-        $this->event->setRepository(
+        $this->event->setObjectRepository(
             $repository
         );
 
         $this->assertSame(
             $repository,
-            $this->event->getRepository()
+            $this->event->getObjectRepository()
         );
     }
 

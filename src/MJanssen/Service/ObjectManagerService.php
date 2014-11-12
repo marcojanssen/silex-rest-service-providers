@@ -22,7 +22,7 @@ class ObjectManagerService
      * @param $objectManager
      * @return mixed
      */
-    public function getRepository($objectName)
+    public function getObjectRepository($objectName)
     {
         return $this->objectManager->getRepository($objectName);
     }
