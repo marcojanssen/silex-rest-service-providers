@@ -1,9 +1,10 @@
 <?php
 namespace MJanssen\Event\Listener;
 
+use RuntimeException;
 use MJanssen\Service\ObjectManagerService;
 use Symfony\Component\EventDispatcher\Event;
-use Zend\Loader\Exception\RuntimeException;
+
 
 class ObjectManagerListener
 {
