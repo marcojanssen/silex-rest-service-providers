@@ -12,6 +12,18 @@ class RestGetEventTest extends PHPUnit_Framework_TestCase
         $this->event = new RestGetEvent();
     }
 
+    public function testSetEntityName()
+    {
+        $testName = 'MJanssen\Assets\Entity\Test';
+
+        $this->event->setEntityName($testName);
+
+        $this->assertSame(
+            $testName,
+            $this->event->getEntityName()
+        );
+    }
+
     public function testSetEntity()
     {
         $testEntity = new Test();

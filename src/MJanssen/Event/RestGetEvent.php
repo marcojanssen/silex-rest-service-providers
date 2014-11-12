@@ -7,6 +7,11 @@ use Symfony\Component\EventDispatcher\Event;
 class RestGetEvent extends Event
 {
     /**
+     * @var string
+     */
+    protected $entityName;
+
+    /**
      * @var object
      */
     protected $entity;
@@ -22,19 +27,19 @@ class RestGetEvent extends Event
     protected $identifier;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIdentifier()
+    public function getEntityName()
     {
-        return $this->identifier;
+        return $this->entityName;
     }
 
     /**
-     * @param int $identifier
+     * @param string $entityName
      */
-    public function setIdentifier($identifier)
+    public function setEntityName($entityName)
     {
-        $this->identifier = $identifier;
+        $this->entityName = $entityName;
     }
 
     /**
@@ -67,6 +72,22 @@ class RestGetEvent extends Event
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param int $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
     }
 
 } 
