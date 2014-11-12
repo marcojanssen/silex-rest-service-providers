@@ -1,28 +1,20 @@
 <?php
-namespace MJanssen\Event;
+namespace MJanssen\Service;
 
+use MJanssen\Assets\Entity\Test;
 use PHPUnit_Framework_TestCase;
 
-class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
+class ObjectManagerServiceTest extends PHPUnit_Framework_TestCase
 {
-    public function testObjectRepositoryIsSetInEvent()
+    public function testGetRepository()
     {
-        $event = new RestGetEvent();
-
-        $event->setObjectManager(
+        $service = new ObjectManagerService(
             $this->getObjectManagerMock()
         );
 
-        $event->setObjectName(
-            'MJanssen\Assets\Entity\Test'
-        );
-
-        $listener = new ObjectRepositoryListener();
-        $listener->setRepository($event);
-
         $this->assertInstanceOf(
             '\Doctrine\Common\Persistence\ObjectRepository',
-            $event->getRepository()
+            $service->getRepository('MJanssen\Assets\Entity\Test')
         );
     }
 
@@ -39,7 +31,7 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
         $entityManager->expects($this->any())
                       ->method('getRepository')
                       ->will($this->returnValue(
-                          $this->getRepositoryMock()
+                          $this->getObjectRepositoryMock()
                       ));
 
         return $entityManager;
@@ -48,11 +40,10 @@ class ObjectRepositoryListenerTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getRepositoryMock()
+    protected function getObjectRepositoryMock()
     {
         return $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                     ->disableOriginalConstructor()
-                    ->getMock();
+                    ->getMockForAbstractClass();
     }
-
 } 

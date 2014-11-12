@@ -1,22 +1,22 @@
 <?php
 namespace MJanssen\Event;
 
-use MJanssen\Service\ObjectRepositoryService;
+use MJanssen\Service\ObjectManagerService;
 use Symfony\Component\EventDispatcher\Event;
 
-class ObjectRepositoryListener
+class ObjectManagerListener
 {
     /**
      * @param Event $event
      */
     public function setRepository(Event $event)
     {
-        $entityRepositoryService = new ObjectRepositoryService(
+        $objectManagerService = new ObjectManagerService(
             $event->getObjectManager()
         );
 
         $event->setRepository(
-            $entityRepositoryService->getRepository(
+            $objectManagerService->getRepository(
                 $event->getObjectName()
             )
         );

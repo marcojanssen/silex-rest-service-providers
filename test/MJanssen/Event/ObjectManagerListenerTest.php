@@ -1,20 +1,28 @@
 <?php
-namespace MJanssen\Service;
+namespace MJanssen\Event;
 
-use MJanssen\Assets\Entity\Test;
 use PHPUnit_Framework_TestCase;
 
-class ObjectRepositoryServiceTest extends PHPUnit_Framework_TestCase
+class ObjectManagerServiceListenerTest extends PHPUnit_Framework_TestCase
 {
-    public function testGetRepository()
+    public function testObjectRepositoryIsSetInEvent()
     {
-        $service = new ObjectRepositoryService(
+        $event = new RestGetEvent();
+
+        $event->setObjectManager(
             $this->getObjectManagerMock()
         );
 
+        $event->setObjectName(
+            'MJanssen\Assets\Entity\Test'
+        );
+
+        $listener = new ObjectManagerListener();
+        $listener->setRepository($event);
+
         $this->assertInstanceOf(
             '\Doctrine\Common\Persistence\ObjectRepository',
-            $service->getRepository('MJanssen\Assets\Entity\Test')
+            $event->getRepository()
         );
     }
 
@@ -23,27 +31,28 @@ class ObjectRepositoryServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function getObjectManagerMock()
     {
-        $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
+        $objectManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                               ->disableOriginalConstructor()
                               ->setMethods(array('getRepository'))
                               ->getMockForAbstractClass();
 
-        $entityManager->expects($this->any())
+        $objectManager->expects($this->any())
                       ->method('getRepository')
                       ->will($this->returnValue(
-                          $this->getObjectRepositoryMock()
+                          $this->getRepositoryMock()
                       ));
 
-        return $entityManager;
+        return $objectManager;
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getObjectRepositoryMock()
+    protected function getRepositoryMock()
     {
         return $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectRepository')
                     ->disableOriginalConstructor()
-                    ->getMockForAbstractClass();
+                    ->getMock();
     }
+
 } 
