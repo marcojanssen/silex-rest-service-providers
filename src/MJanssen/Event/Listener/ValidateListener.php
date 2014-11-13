@@ -26,7 +26,9 @@ class ValidateListener
     {
         $event->setResult(
             $this->validator->validate(
-                $event->getSubject()
+                $event->getSubject(),
+                $event->getConstraints(),
+                $event->getGroups()
             )
         );
     }
