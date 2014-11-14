@@ -2,7 +2,7 @@
 namespace MJanssen\Event\Listener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class FlushListener
 {
@@ -22,7 +22,7 @@ class FlushListener
     /**
      * @param Event $event
      */
-    public function onFinish(Event $event)
+    public function onFinish(GenericEvent $event)
     {
         $this->objectManager->flush();
     }

@@ -2,7 +2,7 @@
 namespace MJanssen\Event\Listener;
 
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class FlushListenerTest extends PHPUnit_Framework_TestCase
 {
@@ -13,7 +13,7 @@ class FlushListenerTest extends PHPUnit_Framework_TestCase
         );
 
         $listener->onFinish(
-            new Event()
+            new GenericEvent()
         );
     }
 
