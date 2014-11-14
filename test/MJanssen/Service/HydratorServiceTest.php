@@ -51,14 +51,14 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
         $transformer = $this->getTransformerMock();
         $transformer->expects($this->once())
             ->method('transformHydrateData')
-            ->with(array(1));
+            ->with(($this->testData));
 
         $service    = new HydratorService(
             SerializerBuilder::create()->build(),
             $transformer
         );
 
-        $service->hydrateEntity(json_encode(array(1)), 'MJanssen\Assets\Entity\Test');
+        $service->hydrateEntity(json_encode($this->testData), 'MJanssen\Assets\Entity\Test');
     }
 
     /**
