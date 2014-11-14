@@ -14,29 +14,59 @@ class HydratorServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testHydrateEntity()
     {
-        $serializer = SerializerBuilder::create()->build();
-        $service    = new HydratorService($serializer, $this->getTransformer());
+        $transformer = $this->getTransformerMock();
 
-        $result = $service->hydrateEntity($this->testData, 'MJanssen\Assets\Entity\Test');
+        $transformer->expects($this->once())
+                    ->method('transformHydrateData')
+                    ->will($this->returnValue($this->testData));
+
+        $service = new HydratorService(
+            SerializerBuilder::create()->build(),
+            $transformer
+        );
 
         $this->assertEquals(
             $this->createEntity($this->testData),
-            $result
+            $service->hydrateEntity($this->testData, 'MJanssen\Assets\Entity\Test')
         );
+    }
+
+    public function testIfEmptyDataIsConvertedToArray()
+    {
+        $transformer = $this->getTransformerMock();
+        $transformer->expects($this->once())
+                    ->method('transformHydrateData')
+                    ->with(array());
+
+        $service    = new HydratorService(
+            SerializerBuilder::create()->build(),
+            $transformer
+        );
+
+        $service->hydrateEntity(null, 'MJanssen\Assets\Entity\Test');
+    }
+
+    public function testIfDataIsDecodedFromJsonToArray()
+    {
+        $transformer = $this->getTransformerMock();
+        $transformer->expects($this->once())
+            ->method('transformHydrateData')
+            ->with(array(1));
+
+        $service    = new HydratorService(
+            SerializerBuilder::create()->build(),
+            $transformer
+        );
+
+        $service->hydrateEntity(json_encode(array(1)), 'MJanssen\Assets\Entity\Test');
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getTransformer()
+    protected function getTransformerMock()
     {
-        $transformer = $this->getMock('MJanssen\Service\TransformerService', array('transformHydrateData', 'getTransformer'), array(), '', false);
-
-        $transformer->expects($this->any())
-            ->method('transformHydrateData')
-            ->will($this->returnValue($this->testData));
-
-        return $transformer;
+        return $this->getMock('MJanssen\Service\TransformerService', array('transformHydrateData', 'getTransformer'), array(), '', false);
     }
 
     /**
