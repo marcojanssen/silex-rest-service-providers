@@ -14,7 +14,7 @@
         "dflydev/doctrine-orm-service-provider": "1.0.*",
         "doctrine/orm": "~2.3",
         "saxulum/saxulum-doctrine-orm-manager-registry-provider": "2.0.*",
-        "jms/serializer": "0.16.0",
+        "jms/serializer": "~1.0",
         "jurjean/spray-persistence-bundle": "2.*",
         "silex/silex": "~1.2",
         "symfony/finder": "~2.3",
